@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@slidev/cli": "^52.11.0",
-    "slidev-addon-findy": "link:../../findy/packages/slidev-addon-findy",
-    "slidev-theme-findy": "link:../../findy/packages/slidev-theme-findy",
+    "slidev-addon-findy": "link:../../../mozumasu/findy-slidev/packages/slidev-addon-findy",
+    "slidev-theme-findy": "link:../../../mozumasu/findy-slidev/packages/slidev-theme-findy",
     "vue": "^3.5.0"
   },
   "devDependencies": {
