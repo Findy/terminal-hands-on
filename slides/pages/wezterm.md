@@ -326,4 +326,56 @@ wezterm.on("format-tab-title", function(tab)
 end)
 ```
 
+---
+layout: two-cols
+ratio: 1/1
+eyebrow: wezterm
+---
+
+# 設定が育ったらファイルを分割する
+
+::left::
+
+役割ごとのファイルに分けて `require` で読み込む
+
+<div class="code-compact">
+
+```lua [~/.config/wezterm/wezterm.lua]
+-- 同じディレクトリの lua を読み込んで適用
+require("keymaps").apply_to_config(config)
+require("appearance").apply_to_config(config)
+require("tab").apply_to_config(config)
+
+return config
+```
+
+</div>
+
+<FindyRef>
+
+[mozumasu/dotfiles の wezterm](https://github.com/mozumasu/dotfiles/tree/main/.config/wezterm)
+
+</FindyRef>
+
+::right::
+
+分割した側は「config を受け取って足す」関数を返す
+
+<div class="code-compact">
+
+```lua [~/.config/wezterm/keymaps.lua]
+local module = {}
+
+function module.apply_to_config(config)
+  config.leader = { key = ";", mods = "CTRL" }
+  config.keys = {
+    -- キーバインドをここに集約
+  }
+end
+
+return module
+```
+
+</div>
+
 
