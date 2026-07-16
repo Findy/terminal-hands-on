@@ -185,10 +185,10 @@ Mac は <FindyAccentMark>**Cmd**</FindyAccentMark> (GUI) と <FindyAccentMark>**
 Windows は両方 `Ctrl` なので、ターミナルでは <FindyAccentMark>**Shift を足して区別**</FindyAccentMark>する
 
 <div class="mt-4 space-y-2">
-  <FindyKeyValue size="1rem" label="Ctrl+Shift+C">コピー（ターミナル内）</FindyKeyValue>
-  <FindyKeyValue size="1rem" label="Ctrl+Shift+V">ペースト（ターミナル内）</FindyKeyValue>
-  <FindyKeyValue size="1rem" label="Ctrl+C">プロセス中断 (SIGINT)</FindyKeyValue>
-  <FindyKeyValue size="1rem" label="Ctrl+V">リテラル入力モード</FindyKeyValue>
+  <FindyKeyValue size="1rem" labelWidth="9em" label="Ctrl+Shift+C">コピー（ターミナル内）</FindyKeyValue>
+  <FindyKeyValue size="1rem" labelWidth="9em" label="Ctrl+Shift+V">ペースト（ターミナル内）</FindyKeyValue>
+  <FindyKeyValue size="1rem" labelWidth="9em" label="Ctrl+C">プロセス中断 (SIGINT)</FindyKeyValue>
+  <FindyKeyValue size="1rem" labelWidth="9em" label="Ctrl+V">リテラル入力モード</FindyKeyValue>
 </div>
 
 <FindyRef label="参照">
