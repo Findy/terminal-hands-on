@@ -154,7 +154,45 @@ ratio: 1/1
 eyebrow: wezterm
 ---
 
-# フォントの設定 <span class="muted">(Optional)</span>
+# フォントの設定 <span class="muted">(手軽版)</span>
+
+::left::
+
+WezTerm は <FindyAccentMark>JetBrains Mono</FindyAccentMark>・Nerd Font アイコン・絵文字を同梱していて、入れなくてもアイコンつきプロンプトまで出せる
+
+<FindyCallout>
+  新しく探すなら <a href="https://www.nerdfonts.com/font-downloads">Nerd Fonts</a> か、
+  ブラウザで試し打ちできる <a href="https://www.programmingfonts.org">Programming Fonts</a> から
+</FindyCallout>
+
+<FindyRef>
+
+[Fonts](https://wezterm.org/config/fonts.html)
+
+</FindyRef>
+
+::right::
+
+手軽版はサイズだけ好みに合わせる
+
+```lua [~/.config/wezterm/wezterm.lua]
+-- フォントは同梱の JetBrains Mono のまま
+config.font_size = 14.0 -- [!code ++]
+```
+
+手元のフォントから選ぶなら、設定に貼れる形式で一覧を出せる
+
+```sh
+wezterm ls-fonts --list-system
+```
+
+---
+layout: two-cols
+ratio: 1/1
+eyebrow: wezterm
+---
+
+# フォントの設定 <span class="muted">(こだわり版)</span>
 
 ::left::
 
