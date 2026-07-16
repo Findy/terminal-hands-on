@@ -141,6 +141,55 @@ config.keys = {
 ```
 
 ---
+layout: two-cols
+ratio: 1/1
+eyebrow: wezterm
+---
+
+# QuickSelect で画面の文字列を拾う
+
+::left::
+
+画面の URL・パス・ハッシュにラベルが振られ、マウスなしでコピーできる
+
+<FindyKeyValueList size="0.95rem">
+  <FindyKeyValue label="発動"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Space</kbd></FindyKeyValue>
+  <FindyKeyValue label="コピー">候補のラベルのキーを打つ</FindyKeyValue>
+  <FindyKeyValue label="貼り付け">ラベルを大文字で打つ</FindyKeyValue>
+</FindyKeyValueList>
+
+<FindyCallout>
+  <code>QuickSelectArgs</code> で「選んで開く」も組める。
+  AWS の ARN を選んでそのままコンソールを開ける
+</FindyCallout>
+
+<FindyRef>
+
+[Quick Select Mode](https://wezterm.org/quickselect.html)
+
+</FindyRef>
+
+::right::
+
+拾いたいパターンは正規表現で足せる
+
+```lua [~/.config/wezterm/wezterm.lua]
+-- macOS は Ctrl+Space が IME 切替と
+-- 被るので Cmd+Space に割り当て直す
+config.keys = {
+  { key = " ", mods = "SUPER",
+    action = act.QuickSelect },
+}
+
+config.quick_select_patterns = {
+  -- Git commit hash
+  "\\b[0-9a-f]{7,40}\\b",
+  -- IP アドレス
+  "\\b(?:[0-9]{1,3}\\.){3}[0-9]{1,3}\\b",
+}
+```
+
+---
 layout: content
 eyebrow: wezterm
 ---
