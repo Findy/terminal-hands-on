@@ -13,7 +13,6 @@ concurrency:
 
 jobs:
   deploy:
-    # workflow_dispatch を main 以外の ref で実行してもデプロイさせない
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -21,29 +20,28 @@ jobs:
       contents: read
     steps:
       # slides/package.json がテーマ/アドオンを
-      # link:../../CHANGE_ME/... で参照しているため、隣に checkout する。
-      # テーマリポジトリが private の場合は contents:read の fine-grained PAT が必要
+      # link:../../../mozumasu/findy-slidev/... で参照しているため、
+      # CI のディレクトリ構造をローカルの
+      # github.com/{Findy/terminal-hands-on,mozumasu/findy-slidev} に合わせる
       - name: Checkout deck
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
-          path: deck
+          path: Findy/terminal-hands-on
           persist-credentials: false
 
       - name: Checkout theme repository
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
-          repository: mozumasu/CHANGE_ME
-          # 再現性のため theme のコミットを固定する。更新時はここを上げる
+          repository: mozumasu/findy-slidev
           ref: main
-          path: CHANGE_ME
-          token: ${{ secrets.THEME_REPO_READ_TOKEN }}
+          path: mozumasu/findy-slidev
+          token: ${{ secrets.FINDY_SLIDEV_READ_TOKEN }}
           persist-credentials: false
 
-      # バージョンは slides/package.json の packageManager フィールドから読む
       - name: Setup pnpm
         uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
         with:
-          package_json_file: deck/slides/package.json
+          package_json_file: Findy/terminal-hands-on/slides/package.json
 
       - name: Setup Node.js
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
@@ -51,27 +49,25 @@ jobs:
           node-version: 24
           cache: pnpm
           cache-dependency-path: |
-            deck/slides/pnpm-lock.yaml
-            CHANGE_ME/pnpm-lock.yaml
+            Findy/terminal-hands-on/slides/pnpm-lock.yaml
+            mozumasu/findy-slidev/pnpm-lock.yaml
 
       - name: Install theme dependencies
-        working-directory: CHANGE_ME
+        working-directory: mozumasu/findy-slidev
         run: pnpm install --frozen-lockfile
 
       - name: Install slides dependencies
-        working-directory: deck/slides
+        working-directory: Findy/terminal-hands-on/slides
         run: pnpm install --frozen-lockfile
 
-      # *.workers.dev のルート配信のため --base 指定は不要
       - name: Build slides
-        working-directory: deck/slides
+        working-directory: Findy/terminal-hands-on/slides
         run: pnpm build
 
-      # Slidev が生成する Netlify 用 _redirects (/* /index.html 200) を
-      # Cloudflare は不正なルールとして拒否する。SPA fallback は
-      # wrangler.jsonc の not_found_handling が担うため削除してよい
+      # Slidev が生成する Netlify 用 _redirects を削除。
+      # SPA fallback は wrangler.jsonc の not_found_handling が担う
       - name: Remove Netlify redirects file
-        working-directory: deck/slides
+        working-directory: Findy/terminal-hands-on/slides
         run: rm -f dist/_redirects
 
       - name: Deploy to Cloudflare Workers
@@ -79,4 +75,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          workingDirectory: deck/slides
+          workingDirectory: Findy/terminal-hands-on/slides
