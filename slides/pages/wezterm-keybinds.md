@@ -202,6 +202,7 @@ eyebrow: wezterm
 <FindyCallout>
   <code>QuickSelectArgs</code> で「選んで開く」も組める。
   AWS の ARN を選んでそのままコンソールを開ける
+  (<a href="https://github.com/mozumasu/dotfiles/blob/ebfef03a888/.config/wezterm/keymaps.lua#L137-L153">設定例</a>)
 </FindyCallout>
 
 <FindyRef>
