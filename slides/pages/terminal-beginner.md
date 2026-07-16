@@ -8,9 +8,11 @@ toc: ターミナル生活を支えるやつらの紹介
 
 今日はこの 3 つを一つずつ自分好みにしていく
 
-<FindyFlow
-  steps="ターミナルエミュレータ\nWezTerm,ターミナルマルチプレクサ\nherdr,シェル\nzsh"
-/>
+<FindyKeyValueList size="1.05rem" gap="1rem" class="mt-6">
+  <FindyKeyValue label="ターミナルエミュレータ">WezTerm</FindyKeyValue>
+  <FindyKeyValue label="ターミナルマルチプレクサ">herdr</FindyKeyValue>
+  <FindyKeyValue label="シェル">zsh</FindyKeyValue>
+</FindyKeyValueList>
 
 ---
 layout: section
