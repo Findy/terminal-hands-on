@@ -154,7 +154,7 @@ ratio: 1/1
 eyebrow: wezterm
 ---
 
-# フォントの設定 <span class="muted">(手軽版)</span>
+# フォントの設定
 
 ::left::
 
@@ -173,10 +173,11 @@ WezTerm は <FindyAccentMark>JetBrains Mono</FindyAccentMark>・Nerd Font アイ
 
 ::right::
 
-手軽版はサイズだけ好みに合わせる
+設定はフォント名とサイズを指定するだけ
 
 ```lua [~/.config/wezterm/wezterm.lua]
--- フォントは同梱の JetBrains Mono のまま
+-- 未指定なら同梱の JetBrains Mono
+config.font = wezterm.font("JetBrains Mono") -- [!code ++]
 config.font_size = 14.0 -- [!code ++]
 ```
 
@@ -192,7 +193,7 @@ ratio: 1/1
 eyebrow: wezterm
 ---
 
-# フォントの設定 <span class="muted">(こだわり版)</span>
+# フォントの設定 <span class="muted">(例: HackGen)</span>
 
 ::left::
 
