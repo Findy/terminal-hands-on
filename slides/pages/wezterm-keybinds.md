@@ -112,6 +112,47 @@ ratio: 1/1
 eyebrow: wezterm
 ---
 
+# コマンドパレット
+
+::left::
+
+WezTerm のコマンドパレットは <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>
+
+<p class="mt-4">
+コマンド名であいまい検索でき、よく使うものほど上に出てくる。
+コマンドの横にはショートカットキーも表示される
+</p>
+
+<FindyCallout>
+  VS Code と同じキーバインド。覚えていなくても検索して実行できる
+</FindyCallout>
+
+::right::
+
+```lua [~/.config/wezterm/wezterm.lua]
+local act = wezterm.action
+
+config.keys = {
+  {
+    key = "p",
+    mods = "CTRL|SHIFT",
+    action = act.ActivateCommandPalette,
+  },
+}
+```
+
+<FindyRef>
+
+[ActivateCommandPalette](https://wezterm.org/config/lua/keyassignment/ActivateCommandPalette.html)
+
+</FindyRef>
+
+---
+layout: two-cols
+ratio: 1/1
+eyebrow: wezterm
+---
+
 # WezTerm キーバインドの設定例
 
 ::left::
