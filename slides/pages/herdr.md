@@ -64,29 +64,10 @@ eyebrow: herdr
   class="shadow rounded"
 >
   <FindyImageRegion label="spaces" color="#3b82f6" :x="0.4" :y="1.5" :w="19.6" :h="54.5" />
-  <FindyImageRegion class="region-worktree" label="worktree" color="#8b5cf6" :x="2" :y="22.8" :w="17.6" :h="10.7" />
+  <FindyImageRegion label="worktree" labelPosition="above-right" color="#8b5cf6" :x="2" :y="22.8" :w="17.6" :h="10.7" />
   <FindyImageRegion label="agents" color="#10b981" :x="0.4" :y="58" :w="19.6" :h="37.5" />
-  <FindyImageRegion class="region-pane" label="フォーカス中のペイン" color="#f59e0b" :x="20.8" :y="0.6" :w="78.8" :h="95.4" />
+  <FindyImageRegion label="フォーカス中のペイン" labelPosition="top-right" color="#f59e0b" :x="20.8" :y="0.6" :w="78.8" :h="95.4" />
 </FindyAnnotatedImage>
-
-<style>
-/* worktree 領域は行が詰まっていて既定のラベル位置 (枠内左上) だと行を隠すため、
-   このスライドに限りラベルを枠の右上外側に出す */
-:global(.region-worktree .findy-image-region__label) {
-  top: auto;
-  /* 枠の上辺 border に接して置く (同色なので繋がって見える) */
-  bottom: 100%;
-  left: auto;
-  right: -2.5px;
-  border-radius: 4px 4px 0 0;
-}
-/* ペインのラベルは既定位置 (枠内左上) だとタブバーを隠すため右上角に寄せる */
-:global(.region-pane .findy-image-region__label) {
-  left: auto;
-  right: -2.5px;
-  border-radius: 0 4px 0 6px;
-}
-</style>
 
 ---
 layout: two-cols
