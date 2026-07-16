@@ -72,13 +72,15 @@ toc: まとめ
 
 # まとめ
 
-- **ターミナル** — WezTerm は Lua で見た目もキーバインドも自分好みにできる
-- **シェル** — Emacs バインドを覚えると速い。CapsLock → Ctrl も効果大
-- **キーバインド** — 内側（シェル）→ 外側（ターミナル）の順で設定すると衝突しない
-- **マルチプレクサ** — herdr でターミナルを分割管理。AI エージェントとも協業できる
-- **ワークフロー** — ghost・portless・worktree の組み合わせで開発が回る
+<div class="mt-4 space-y-4">
+  <FindyKeyValue size="1.05rem" labelWidth="9em" label="ターミナル">WezTerm は Lua で見た目もキーバインドも自分好みにできる</FindyKeyValue>
+  <FindyKeyValue size="1.05rem" labelWidth="9em" label="シェル">Emacs バインドを覚えると速い。CapsLock を Ctrl にすると更に快適</FindyKeyValue>
+  <FindyKeyValue size="1.05rem" labelWidth="9em" label="キーバインド">内側（シェル）から外側（ターミナル）の順に設定すると衝突しない</FindyKeyValue>
+  <FindyKeyValue size="1.05rem" labelWidth="9em" label="マルチプレクサ">herdr でターミナルを分割管理。AI エージェントとも協業できる</FindyKeyValue>
+  <FindyKeyValue size="1.05rem" labelWidth="9em" label="ワークフロー">ghost・portless・worktree を組み合わせると AI との並行開発が現実になる</FindyKeyValue>
+</div>
 
-<FindyCallout class="mt-4">
+<FindyCallout class="mt-6">
   設定はすべて <code>~/.config/</code> 以下のファイル。dotfiles として Git 管理すればどの環境でも再現できる
 </FindyCallout>
 

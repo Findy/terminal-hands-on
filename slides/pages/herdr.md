@@ -36,7 +36,7 @@ eyebrow: herdr
 <FindyWebPage
   url="https://herdr.dev"
   image="/screenshots/herdr-dev.png"
-  caption="herdr.dev — One terminal. The whole herd."
+  caption="herdr.dev"
 />
 
 ---
@@ -112,7 +112,7 @@ brew install herdr
 curl -fsSL https://herdr.dev/install.sh | sh
 ```
 
-```sh [windows]
+```sh [Windows]
 powershell -ExecutionPolicy Bypass -c "irm https://herdr.dev/install.ps1 | iex"
 ```
 
@@ -153,7 +153,7 @@ eyebrow: herdr
 
 # デフォルト設定ファイル (config.toml)
 
-`herdr --default-config` の出力 (全 278 行)。設定キーはコメントを外した状態
+`herdr --default-config` の出力 (全 278 行)。タブでコメントの日本語訳・コメント抜き版に切り替えられる
 
 <div class="config-scroll">
 
@@ -870,7 +870,7 @@ scrollback_limit_bytes = 10000000
   max-width: 100%;
 }
 :global(.config-scroll .slidev-code) {
-  max-height: 20rem;
+  max-height: 16rem;
   max-width: 100%;
   overflow: auto !important;
 }
@@ -888,19 +888,19 @@ eyebrow: herdr
 
 キーバインドの起点となるキー (デフォルト: `ctrl+b`)
 
-設定ファイルの例はどれも採用しなかった
+config.toml のコメントに挙がっている候補はどれも採用しなかった
 
 <div class="mt-4">
-  <FindyKeyValue size="1.02rem" label="ctrl+b">emacs の backward-char と被る</FindyKeyValue>
+  <FindyKeyValue size="1.02rem" label="ctrl+b">Emacs の backward-char と被る</FindyKeyValue>
   <FindyKeyValue size="1.02rem" label="f12">ホームポジションから遠い</FindyKeyValue>
-  <FindyKeyValue size="1.02rem" label="esc">emacs の Meta (M-) キーと被る</FindyKeyValue>
+  <FindyKeyValue size="1.02rem" label="esc">Emacs の Meta (M-) キーと被る</FindyKeyValue>
   <FindyKeyValue size="1.02rem" label="-"><code>cd -</code> の abbreviation と被る</FindyKeyValue>
 </div>
 
 ::right::
 
-WezTerm の Leader は `ctrl+;` にしたので、
-`ctrl+q` が空いている → herdr の prefix に採用
+WezTerm の Leader を `ctrl+;` にしたので
+`ctrl+q` が空いた。これを herdr の prefix にする
 
 ```toml
 prefix = "ctrl+q"
@@ -920,14 +920,13 @@ eyebrow: herdr
 
 キーの「届く範囲」で振り分けた
 
-- `ctrl+;` は**従来の端末キーエンコーディングに無い**
-  - シェルや fzf に届かない → WezTerm が握っても衝突しにくい
-  - kitty keyboard protocol 対応の TUI には届くが、WezTerm が先取りすれば問題ない
-- herdr の prefix は**端末を選ばず確実に効くキー**にしたい
-  - 公式設定にも「修飾付き記号は端末依存」と注記 → `ctrl+q` を採用
+<div class="mt-6 space-y-4">
+  <FindyKeyValue size="1.05rem" labelWidth="6em" label="ctrl+;">従来の端末キーエンコーディングに無いキー。シェルや fzf に届かないので、WezTerm が握っても衝突しにくい</FindyKeyValue>
+  <FindyKeyValue size="1.05rem" labelWidth="6em" label="ctrl+q">端末を選ばず確実に届くキー。herdr の公式設定にも「修飾付き記号は端末依存」と注記があるため、prefix はこちらにした</FindyKeyValue>
+</div>
 
-<FindyCallout class="mt-4">
-  <code>ctrl+s</code> も候補だったが、nvim の git UI で submit に使われていたため除外
+<FindyCallout class="mt-6">
+  kitty keyboard protocol 対応の TUI には <code>ctrl+;</code> も届くが、WezTerm が先取りすれば問題ない
 </FindyCallout>
 
 ---
@@ -941,27 +940,27 @@ eyebrow: herdr
 ::left::
 
 ```toml [ペイン操作]
-split_vertical = "prefix+v"      # 縦に分割
+split_vertical = "prefix+v"       # 縦に分割
 split_horizontal = "prefix+minus" # 横に分割
-focus_pane_left = "prefix+h"     # ← ペイン移動
-focus_pane_down = "prefix+j"     # ↓
-focus_pane_up = "prefix+k"       # ↑
-focus_pane_right = "prefix+l"    # →
-zoom = "prefix+z"                # ペームをズーム
-close_pane = "prefix+x"          # ペインを閉じる
-resize_mode = "prefix+r"         # リサイズモード
+focus_pane_left = "prefix+h"      # ペイン移動 ←
+focus_pane_down = "prefix+j"      # ↓
+focus_pane_up = "prefix+k"        # ↑
+focus_pane_right = "prefix+l"     # →
+zoom = "prefix+z"                 # ズーム
+close_pane = "prefix+x"           # 閉じる
+resize_mode = "prefix+r"          # リサイズ
 ```
 
 ::right::
 
 ```toml [タブ・ワークスペース]
-new_tab = "prefix+c"         # 新しいタブ
-next_tab = "prefix+n"        # 次のタブ
-previous_tab = "prefix+p"    # 前のタブ
-switch_tab = "prefix+1..9"   # タブを番号で切替
-workspace_picker = "prefix+w" # ワークスペースピッカー
-help = "prefix+?"            # 全キー一覧
-settings = "prefix+s"        # 設定画面
+new_tab = "prefix+c"          # 新しいタブ
+next_tab = "prefix+n"         # 次のタブ
+previous_tab = "prefix+p"     # 前のタブ
+switch_tab = "prefix+1..9"    # 番号で切替
+workspace_picker = "prefix+w" # 一覧から選択
+help = "prefix+?"             # 全キー一覧
+settings = "prefix+s"         # 設定画面
 ```
 
 <FindyCallout class="mt-4">
@@ -999,7 +998,7 @@ herdr server reload-config
 {
   brief = "Herdr: Reload config",
   icon = "md_refresh",
-  action = wezterm.action_callback(function(window, pane)
+  action = wezterm.action_callback(function()
     wezterm.background_child_process({
       os.getenv("SHELL") or "/bin/zsh",
       "-lic",
@@ -1019,7 +1018,7 @@ eyebrow: herdr
 
 ::left::
 
-herdr は各 AI エージェントの<FindyAccentMark>**公式スキル**</FindyAccentMark>を提供している
+herdr は各 AI エージェントの<FindyAccentMark>公式スキル</FindyAccentMark>を提供している
 
 インストールすると、エージェントが `herdr` CLI でペインの作成・操作・読み取りをできるようになる
 
@@ -1042,7 +1041,7 @@ herdr integration status
 - [Copilot](https://github.com/features/copilot)
 - [Cursor](https://cursor.com)
 - [Devin](https://devin.ai)
-- 他 9 種…
+- ほか計 14 エージェントに対応
 
 </div>
 

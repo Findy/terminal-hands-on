@@ -16,14 +16,14 @@ caption: WezTerm 公式サイト
 
 # WezTerm とは
 
-Rust 製の ターミナルエミュレータ
+Rust 製のターミナルエミュレータ
 
 
-- Luaなので条件分岐ができる
-- **`leader`キー**や**キーテーブル**でキー操作が柔軟
-- 繰り返し操作を一つのキーバインドにまとめられる
-- CLIコマンドがある
-- 設定が自動で反映される
+- 設定を Lua で書くので、OS やホスト名で条件分岐できる
+- `leader` キーやキーテーブルで複雑なキー操作を組める
+- 繰り返し操作を 1 つのキーバインドにまとめられる
+- CLI からタブやペインを操作できる
+- 設定を保存すると即反映される
 
 
 ---
@@ -121,10 +121,11 @@ mkdir -p ~/dotfiles/.config/wezterm
 touch ~/dotfiles/.config/wezterm/wezterm.lua
 
 # シンボリックリンクを貼る
-ln -s ~/dotfiles/.config/wezterm/wezterm.lua ~/.config/wezterm/wezterm.lua
+ln -s ~/dotfiles/.config/wezterm/wezterm.lua \
+  ~/.config/wezterm/wezterm.lua
 ```
 
-<FindyRef label="ref">
+<FindyRef>
 <a href="https://wezterm.org/config/files.html">Configuration - Wez's Terminal Emulator</a>
 </FindyRef>
 
@@ -154,7 +155,7 @@ eyebrow: wezterm
 
 ::left::
 
-フォントは[HackGen](https://github.com/yuru7/HackGen)が好きなため、このフォントをインストールして設定していく
+今回は [HackGen](https://github.com/yuru7/HackGen) を使う（Nerd Fonts 対応で、日本語も等幅で揃う）
 
 ::code-group
 
@@ -180,8 +181,8 @@ sudo pacman -S otf-hackgen-nerd
 
 ::
 
-<FindyRef label="ref">
-<a href="https://github.com/yuru7/HackGen">yuru7/HackGen: Hack と源柔ゴシックを合成したプログラミングフォント 白源</a>
+<FindyRef>
+<a href="https://github.com/yuru7/HackGen">yuru7/HackGen</a>
 </FindyRef>
 
 ::right::
@@ -193,7 +194,9 @@ local config = wezterm.config_builder()
 config.automatically_reload_config = true
 
 config.font_size = 14.0 -- [!code ++]
-config.font = wezterm.font("HackGen Console NF") -- [!code ++]
+config.font = wezterm.font( -- [!code ++]
+  "HackGen Console NF" -- [!code ++]
+) -- [!code ++]
 
 return config
 ```
@@ -208,18 +211,16 @@ eyebrow: wezterm
 
 ::left::
 
-人類皆一度はスケスケのターミナルに憧れる
+人類皆一度は憧れるスケスケのターミナル
 
 <div class="mt-4">
   <FindyKeyValue size="1.02rem" label="透過">opacity 0.85 でほどよい透け感</FindyKeyValue>
   <FindyKeyValue size="1.02rem" label="ぼかし">blur 20 で文字の視認性を確保</FindyKeyValue>
 </div>
 
-<p class="takeaway mt-8">2 行で<FindyAccentMark><strong>気分がブチ上がる</strong></FindyAccentMark></p>
+<p class="takeaway mt-8">2 行で<FindyAccentMark>気分がブチ上がる</FindyAccentMark></p>
 
 ::right::
-
-`~/.config/wezterm/wezterm.lua`:
 
 ::code-group
 
@@ -230,8 +231,7 @@ local config = wezterm.config_builder()
 -- 背景を透過 -- [!code ++]
 config.window_background_opacity = 0.85 -- [!code ++]
 -- ぼかしを追加 -- [!code ++]
-config.macos_window_background_blur = 20-- [!code ++]
-
+config.macos_window_background_blur = 20 -- [!code ++]
 
 return config
 ```

@@ -9,19 +9,22 @@ toc: シェルの設定
 ---
 layout: two-cols
 ratio: 2/1
+eyebrow: シェルの設定
 ---
 
 # シェルの種類
 
 ::left::
 
-- [bash](https://github.com/bminor/bash)
-- [PowerShell](https://github.com/PowerShell/PowerShell)
-- [zsh](https://github.com/zsh-users/zsh)
-- [fish](https://github.com/fish-shell/fish-shell)
-- [nushell](https://github.com/nushell/nushell)
+<div class="space-y-2">
+  <FindyKeyValue size="0.95rem" labelWidth="7em" label="bash"><a href="https://github.com/bminor/bash">多くの Linux のデフォルト</a></FindyKeyValue>
+  <FindyKeyValue size="0.95rem" labelWidth="7em" label="zsh"><a href="https://github.com/zsh-users/zsh">macOS のデフォルト。bash とほぼ互換</a></FindyKeyValue>
+  <FindyKeyValue size="0.95rem" labelWidth="7em" label="fish"><a href="https://github.com/fish-shell/fish-shell">設定なしでも補完が快適</a></FindyKeyValue>
+  <FindyKeyValue size="0.95rem" labelWidth="7em" label="PowerShell"><a href="https://github.com/PowerShell/PowerShell">Windows 標準</a></FindyKeyValue>
+  <FindyKeyValue size="0.95rem" labelWidth="7em" label="nushell"><a href="https://github.com/nushell/nushell">出力を表として扱える新顔</a></FindyKeyValue>
+</div>
 
-今回は <FindyAccentMark>**zsh**</FindyAccentMark> を例に紹介する（macOS のデフォルトシェル）
+<p class="mt-4">今回は <FindyAccentMark>zsh</FindyAccentMark> を例に紹介する（macOS のデフォルトシェル）</p>
 
 ::right::
 
@@ -47,7 +50,7 @@ echo $0
 # 今のセッションだけzshにする
 zsh
 # 今のセッションのシェルを置き換えるならexecを使う
-exex zsh
+exec zsh
 
 # デフォルトでzshを使うようにする
 chsh -s /bin/zsh
@@ -80,6 +83,20 @@ bind
 
 ::
 
+manをカラー表示する
+
+::code-group
+
+```sh [vim]
+export MANPAGER='vim -M +MANPAGER -'
+```
+
+```sh [nvim]
+export MANPAGER='nvim +Man!'
+```
+
+::
+
 ::right::
 
 詳しく知りたいときは
@@ -99,21 +116,6 @@ man bash
 ```sh [fish]
 # fish は bind 専用の man を持っている
 man bind
-```
-
-::
-
-
-manをカラー表示する
-
-::code-group
-
-```sh [vim]
-export MANPAGER='vim -M +MANPAGER -'
-```
-
-```sh [nvim]
-export MANPAGER='nvim +Man!'
 ```
 
 ::
@@ -143,8 +145,7 @@ vi モード (`bindkey -v`) もあるが、あえて使わない理由:
 ::right::
 
 <FindyCallout class="mt-8">
-  Emacs モードのまま <code>edit-command-line</code> を設定すれば、
-  複雑な編集だけ <FindyAccentMark><code>$EDITOR</code> (Vim/Neovim)</FindyAccentMark> で開ける。
+  複雑な編集だけ <code>$EDITOR</code> で開ける <code>edit-command-line</code> が便利。
   普段は Emacs バインド、ガッツリ編集したいときだけ Vim
 </FindyCallout>
 
@@ -155,7 +156,7 @@ eyebrow: シェルの設定
 
 # Windows で Ctrl キーを快適に使う
 
-Windows キーボードの `Ctrl` は小指の端で押しづらい → <FindyAccentMark>**CapsLock を Ctrl にリマップ**</FindyAccentMark>すると劇的に楽になる
+Windows キーボードの `Ctrl` は小指の端にあって押しづらい。<FindyAccentMark>CapsLock を Ctrl にリマップ</FindyAccentMark>するとかなり楽になる
 
 <div class="mt-4 space-y-2">
   <FindyKeyValue size="0.95rem" label="PowerToys">Microsoft 公式。Keyboard Manager で GUI 設定</FindyKeyValue>
@@ -180,9 +181,9 @@ eyebrow: シェルの設定
 
 # ターミナルのコピー & ペースト
 
-Mac は <FindyAccentMark>**Cmd**</FindyAccentMark> (GUI) と <FindyAccentMark>**Ctrl**</FindyAccentMark> (ターミナル) で物理的にキーが分かれている
+Mac は `Cmd` (GUI) と `Ctrl` (ターミナル) で物理的にキーが分かれている
 
-Windows は両方 `Ctrl` なので、ターミナルでは <FindyAccentMark>**Shift を足して区別**</FindyAccentMark>する
+Windows は両方 `Ctrl` なので、ターミナルでは <FindyAccentMark>Shift を足して区別</FindyAccentMark>する
 
 <div class="mt-4 space-y-2">
   <FindyKeyValue size="1rem" labelWidth="9em" label="Ctrl+Shift+C">コピー（ターミナル内）</FindyKeyValue>
@@ -207,13 +208,12 @@ eyebrow: シェルの設定
 
 ::left::
 
-<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> で WezTerm のコマンドパレットを開ける
+WezTerm のコマンドパレットは <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>
 
-<div class="mt-4 space-y-2">
-  <FindyKeyValue size="0.95rem" labelWidth="8.5em" label="ファジーマッチ">入力で候補を絞り込み</FindyKeyValue>
-  <FindyKeyValue size="0.95rem" labelWidth="8.5em" label="frecency">使用頻度 × 最近の使用でランク付け</FindyKeyValue>
-  <FindyKeyValue size="0.95rem" labelWidth="8.5em" label="キーバインド確認">コマンド横にショートカットキー表示</FindyKeyValue>
-</div>
+<p class="mt-4">
+コマンド名であいまい検索でき、よく使うものほど上に出てくる。
+コマンドの横にはショートカットキーも表示される
+</p>
 
 <FindyCallout class="mt-4">
   VS Code と同じキーバインド。覚えていなくても検索して実行できる
@@ -261,8 +261,8 @@ eyebrow: シェルの設定
 "^E" end-of-line           # 行末へ移動
 "^F" forward-char          # 1文字右へ移動
 "^B" backward-char         # 1文字左へ移動
-"^P" up-line-or-history    # ひとつ前の履歴 (↑)
-"^N" down-line-or-history  # ひとつ次の履歴 (↓)
+"^P" up-line-or-history    # 前の履歴 ↑
+"^N" down-line-or-history  # 次の履歴 ↓
 ```
 
 ::right::
@@ -299,8 +299,8 @@ eyebrow: シェルの設定
 
 "^[f" forward-word     # 単語単位で右へ移動
 "^[b" backward-word    # 単語単位で左へ移動
-"^[." insert-last-word # 直前コマンドの最後の引数を挿入
-"^[H" run-help         # 入力中のコマンドのヘルプを開く
+"^[." insert-last-word # 直前の最後の引数を挿入
+"^[H" run-help         # コマンドのヘルプを開く
 ```
 
 ::right::
@@ -334,8 +334,7 @@ bindkey '^X^R' redo
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey '^[e' edit-command-line
-# Ctrl-p / Ctrl-n を入力中の文字列で前方一致する履歴検索にする
-# (docker と打ってから Ctrl-p → docker で始まる履歴だけをたどれる)
+# Ctrl-p/n を前方一致の履歴検索にする (docker と打って Ctrl-p)
 autoload -Uz history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end  history-search-end

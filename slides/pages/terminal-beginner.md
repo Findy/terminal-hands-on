@@ -1,18 +1,20 @@
 ---
 layout: content
-center: true
 transition: view-transition
 toc: ターミナル生活を支えるやつらの紹介
 ---
 
 # ターミナル生活を支えるやつらを紹介するぜ！
 
-- ターミナル
-- ターミナルマルチプレクサ
-- シェル
+<div class="mt-10 space-y-3">
+  <FindyKeyValue size="1.05rem" labelWidth="13em" label="ターミナル">文字で PC を操作するための画面</FindyKeyValue>
+  <FindyKeyValue size="1.05rem" labelWidth="13em" label="ターミナルマルチプレクサ">1 つの画面を分割して複数のターミナルを扱う</FindyKeyValue>
+  <FindyKeyValue size="1.05rem" labelWidth="13em" label="シェル">入力したコマンドを解釈して実行する本体</FindyKeyValue>
+</div>
 
 ---
 layout: section
+color: blue
 transition: view-transition
 ---
 
@@ -26,7 +28,6 @@ transition: view-transition
 ---
 layout: content
 transition: view-transition
-center: true
 ---
 
 # 設定前に知っておくとお得 ...かもしれないもの {.inline-block.view-transition-f}
@@ -50,7 +51,7 @@ eyebrowNum: 1
 <FindyTermCardList class="mt-10">
   <FindyTermCard term="dotfile">
     設定ファイルのこと
-    <template #note>名前が <code>.</code> で始まることが由来 (ex. <code>.bashrc</code>, <code>.zshrc</code>)</template>
+    <template #note>名前が <code>.</code> で始まることが由来 (例: <code>.bashrc</code>, <code>.zshrc</code>)</template>
   </FindyTermCard>
   <FindyTermCard term="dotfiles">
     設定ファイル<strong>群</strong>のこと
@@ -58,7 +59,7 @@ eyebrowNum: 1
   </FindyTermCard>
 </FindyTermCardList>
 
-エンジニアの名刺的存在
+<p class="mt-4">公開している人も多く、エンジニアの名刺的存在</p>
 
 ::right::
 
@@ -131,13 +132,12 @@ set -gx XDG_STATE_HOME "$HOME/.local/state"
 ::
 
 <FindyCallout variant="warn" class="mt-4">
-  macOS では未設定だと <code>~/Library/Application Support</code> に設定を置くツールがある (ex. lazygit)
+  macOS では未設定だと <code>~/Library/Application Support</code> に設定を置くツールがある (例: lazygit)
 </FindyCallout>
 
 ---
-layout: two-cols
-ratio: 1/1
-eyebrow: DeeWiki
+layout: content
+eyebrow: DeepWiki
 eyebrowNum: 2
 ---
 
@@ -150,26 +150,19 @@ eyebrowNum: 2
   </FindyTermCard>
 </FindyTermCardList>
 
-::left::
+<p class="mt-8 text-[1.05rem]">
+リポジトリの構成図とドキュメントを自動生成してくれて、リポジトリについて AI に質問もできる
+</p>
 
-**できること**
-
-- ドキュメントと構成図の自動生成
-- リポジトリに対して AI に質問できる
-
-::right::
-
-
-**こんなときに便利** {.mt-6}
-
-- ツールを設定する前に仕組みをざっくり掴む
-- README に載っていない挙動を調べる
+<p class="text-[1.05rem]">
+ツールを設定する前に仕組みをざっくり掴んだり、README に載っていない挙動を調べるのに使う
+</p>
 
 ---
 layout: two-cols
 ratio: 2/5
 valign: center
-eyebrow: DeeWiki
+eyebrow: DeepWiki
 eyebrowNum: 2
 ---
 
@@ -178,9 +171,9 @@ eyebrowNum: 2
 ::left::
 
 <div class="mt-2 space-y-4 text-[1.05rem]">
-  <div><FindyColorDot color="#3b82f6" /><strong>質問</strong> — 自然言語でリポジトリに問いかける</div>
-  <div><FindyColorDot color="#10b981" /><strong>回答</strong> — 該当ファイル・行番号を引用しながら説明</div>
-  <div><FindyColorDot color="#f59e0b" /><strong>ソース</strong> — 引用元のコードがそのまま並んで表示される</div>
+  <div><FindyColorDot color="#3b82f6" /><strong>質問</strong>: 自然言語でリポジトリに問いかける</div>
+  <div><FindyColorDot color="#10b981" /><strong>回答</strong>: 該当ファイル・行番号を引用しながら説明</div>
+  <div><FindyColorDot color="#f59e0b" /><strong>ソース</strong>: 引用元のコードがそのまま並んで表示される</div>
 </div>
 
 ::right::
@@ -209,12 +202,12 @@ eyebrowNum: 3
 
 ::left::
 
-- 入力がユーザーに馴染むかどうかはAIでは決められない
+- どのキー操作が手に馴染むかは AI には決められない
 - 一度慣れると後から変更するのが辛い
 
 
-<FindyCallout variant="warn" class="mt-4">
-  設定は内側から外側へ設定するのがオススメ
+<FindyCallout class="mt-4">
+  内側から外側の順に設定するのがオススメ
 </FindyCallout>
 
 ::right::
