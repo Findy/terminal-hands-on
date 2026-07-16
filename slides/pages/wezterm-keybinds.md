@@ -181,11 +181,11 @@ config.keys = {
     action = act.QuickSelect },
 }
 
+-- デフォルトのパターンを無効化する
+config.disable_default_quick_select_patterns = true
 config.quick_select_patterns = {
   -- Git commit hash
   "\\b[0-9a-f]{7,40}\\b",
-  -- IP アドレス
-  "\\b(?:[0-9]{1,3}\\.){3}[0-9]{1,3}\\b",
 }
 ```
 
