@@ -160,11 +160,11 @@ eyebrowNum: 2
   </FindyTermCard>
 </FindyTermCardList>
 
-<p class="mt-8 text-[1.05rem]">
+<p class="lead mt-8">
 リポジトリの構成図とドキュメントを自動生成してくれて、リポジトリについて AI に質問もできる
 </p>
 
-<p class="text-[1.05rem]">
+<p class="lead">
 ツールを設定する前に仕組みをざっくり掴んだり、README に載っていない挙動を調べるのに使う
 </p>
 

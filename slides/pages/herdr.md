@@ -23,7 +23,7 @@ eyebrow: herdr
   </FindyTermCard>
 </FindyTermCardList>
 
-<div class="mt-4 text-[1.05rem]">
+<div class="lead mt-4">
 
 - 1 つのターミナルで全エージェントを一覧
 - working / blocked / done が一目で分かる
@@ -102,7 +102,7 @@ powershell -ExecutionPolicy Bypass -c "irm https://herdr.dev/install.ps1 | iex"
 
 設定ファイルは dotfiles 側に生成して管理する
 
-<div class="compact-code">
+<div class="code-compact" style="--findy-code-compact-size: 0.95rem">
 
 ```sh
 mkdir -p ~/dotfiles/.config/herdr
@@ -117,13 +117,6 @@ herdr --default-config \
   <code>herdr server stop</code> → <code>herdr</code> で再表示できる。
   通知などはあとから設定画面 (<code>prefix+s</code>) で変更可能
 </FindyCallout>
-
-<style>
-/* 短いブロックの自動フォント拡大だと install コマンドが横スクロールになるため戻す */
-:global(.compact-code .slidev-code) {
-  --slidev-code-font-size: 0.95rem;
-}
-</style>
 
 ---
 layout: content
@@ -995,7 +988,7 @@ herdr integration status
 
 対応エージェント（一部）
 
-<div class="mt-4 text-[1.05rem]">
+<div class="lead mt-4">
 
 - [Claude Code](https://claude.ai/code)
 - [Codex](https://github.com/openai/codex)
@@ -1054,7 +1047,7 @@ eyebrow: herdr
 
 ::left::
 
-<div class="compact-code">
+<div class="code-compact" style="--findy-code-compact-size: 0.95rem">
 
 ```sh
 # 隣にペインを作る (フォーカスは奪わない)
@@ -1072,7 +1065,7 @@ herdr pane run w1:p2 "Issue #42 を実装して"
 
 ::right::
 
-<div class="compact-code">
+<div class="code-compact" style="--findy-code-compact-size: 0.95rem">
 
 ```sh
 # ステータスを確認
@@ -1090,10 +1083,3 @@ herdr pane read w1:p2 \
   ファイルを編集するタスクは <code>herdr worktree create</code> で
   checkout ごと分離してからペインを開くと、手元の作業と衝突しない
 </FindyCallout>
-
-<style>
-/* 短いブロックの自動フォント拡大だと横スクロールになるため戻す */
-:global(.compact-code .slidev-code) {
-  --slidev-code-font-size: 0.95rem;
-}
-</style>
