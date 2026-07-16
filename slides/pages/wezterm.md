@@ -243,10 +243,10 @@ return config
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
--- 背景を透過
-config.window_background_opacity = 0.85
--- ぼかしを追加 (Acrylic 効果)
-config.win32_system_backdrop = "Acrylic"
+-- 背景を透過 -- [!code ++]
+config.window_background_opacity = 0.85 -- [!code ++]
+-- ぼかしを追加 (Acrylic 効果) -- [!code ++]
+config.win32_system_backdrop = "Acrylic" -- [!code ++]
 
 return config
 ```
@@ -255,10 +255,10 @@ return config
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
--- 背景を透過 (X11 は picom 等が必要なことも)
-config.window_background_opacity = 0.85
--- ぼかしを追加 (Wayland + KDE Plasma のみ)
-config.wayland_window_background_blur = true
+-- 背景を透過 (X11 は picom 等が必要なことも) -- [!code ++]
+config.window_background_opacity = 0.85 -- [!code ++]
+-- ぼかしを追加 (Wayland + KDE Plasma のみ) -- [!code ++]
+config.wayland_window_background_blur = true -- [!code ++]
 
 return config
 ```
