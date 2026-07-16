@@ -34,10 +34,17 @@ transition: view-transition
 
 # 設定前に知っておくとお得 ...かもしれないもの {.inline-block.view-transition-f}
 
-
-1. dotfiles {.inline-block.view-transition-dotfiles}
-2. DeepWiki
-3. キーバインド
+<div class="mt-4">
+<FindyAgendaItem gradient num="1" title="dotfiles" class="view-transition-dotfiles">
+設定ファイル群のこと。GitHub で管理すればどの環境でも同じ設定を再現できる
+</FindyAgendaItem>
+<FindyAgendaItem gradient num="2" title="DeepWiki">
+GitHub リポジトリを AI が解説してくれるサイト。設定前に仕組みをざっくり掴める
+</FindyAgendaItem>
+<FindyAgendaItem gradient num="3" title="キーバインド">
+手に馴染むキー操作は自分にしか決められない。内側から外側の順に設定する
+</FindyAgendaItem>
+</div>
 
 ---
 layout: two-cols

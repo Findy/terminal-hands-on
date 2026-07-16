@@ -17,11 +17,11 @@ eyebrow: シェルの設定
 ::left::
 
 <div class="space-y-2">
-  <FindyKeyValue size="0.95rem" labelWidth="7em" label="bash"><a href="https://github.com/bminor/bash">多くの Linux のデフォルト</a></FindyKeyValue>
-  <FindyKeyValue size="0.95rem" labelWidth="7em" label="zsh"><a href="https://github.com/zsh-users/zsh">macOS のデフォルト。bash とほぼ互換</a></FindyKeyValue>
-  <FindyKeyValue size="0.95rem" labelWidth="7em" label="fish"><a href="https://github.com/fish-shell/fish-shell">設定なしでも補完が快適</a></FindyKeyValue>
-  <FindyKeyValue size="0.95rem" labelWidth="7em" label="PowerShell"><a href="https://github.com/PowerShell/PowerShell">Windows 標準</a></FindyKeyValue>
-  <FindyKeyValue size="0.95rem" labelWidth="7em" label="nushell"><a href="https://github.com/nushell/nushell">出力を表として扱える新顔</a></FindyKeyValue>
+  <FindyKeyValue size="0.95rem" labelWidth="8.5em" label="bash"><a href="https://github.com/bminor/bash">多くの Linux のデフォルト</a></FindyKeyValue>
+  <FindyKeyValue size="0.95rem" labelWidth="8.5em" label="zsh"><a href="https://github.com/zsh-users/zsh">macOS のデフォルト。bash とほぼ互換</a></FindyKeyValue>
+  <FindyKeyValue size="0.95rem" labelWidth="8.5em" label="fish"><a href="https://github.com/fish-shell/fish-shell">設定なしでも補完が快適</a></FindyKeyValue>
+  <FindyKeyValue size="0.95rem" labelWidth="8.5em" label="PowerShell"><a href="https://github.com/PowerShell/PowerShell">Windows 標準</a></FindyKeyValue>
+  <FindyKeyValue size="0.95rem" labelWidth="8.5em" label="nushell"><a href="https://github.com/nushell/nushell">出力を表として扱える新顔</a></FindyKeyValue>
 </div>
 
 <p class="mt-4">今回は <FindyAccentMark>zsh</FindyAccentMark> を例に紹介する（macOS のデフォルトシェル）</p>
