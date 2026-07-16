@@ -1,0 +1,1139 @@
+---
+layout: section
+color: blue
+toc: ターミナルマルチプレクサ
+---
+
+# ターミナルマルチプレクサ
+
+---
+layout: two-cols
+ratio: 1/1
+eyebrow: herdr
+---
+
+# herdr とは
+
+::left::
+
+<FindyTermCardList class="mt-2">
+  <FindyTermCard term="herdr">
+    AI エージェント用のターミナルマルチプレクサ
+    <template #note>tmux ライクな prefix キー操作・セッション永続化・Rust 製単一バイナリ</template>
+  </FindyTermCard>
+</FindyTermCardList>
+
+<div class="mt-4 text-[1.05rem]">
+
+- 1 つのターミナルで全エージェントを一覧
+- working / blocked / done が一目で分かる
+- サーバーがセッションを保持。閉じても SSH 先からでも再アタッチできる
+
+</div>
+
+::right::
+
+<FindyWebPage
+  url="https://herdr.dev"
+  image="/screenshots/herdr-dev.png"
+  caption="herdr.dev — One terminal. The whole herd."
+/>
+
+---
+layout: two-cols
+ratio: 2/3
+valign: center
+eyebrow: herdr
+---
+
+# herdr の画面構成
+
+::left::
+
+<div class="mt-2 space-y-4 text-[1.05rem]">
+  <div><FindyColorDot color="#3b82f6" /><strong>spaces</strong> — ワークスペース一覧。リポジトリ / worktree ごとに並び、worktree はネストして表示</div>
+  <div><FindyColorDot color="#10b981" /><strong>agents</strong> — 全エージェントの状態一覧。working / blocked / done が色付きで並ぶ</div>
+  <div><FindyColorDot color="#f59e0b" /><strong>フォーカス中のペイン</strong> — 上部にタブが並び、中でエージェントが動く</div>
+</div>
+
+::right::
+
+<FindyAnnotatedImage
+  image="/screenshots/herdr-ui.png"
+  alt="herdr の画面。左上に spaces、左下に agents、右にフォーカス中のペイン"
+  class="shadow rounded"
+>
+  <FindyImageRegion label="spaces" color="#3b82f6" :x="0.4" :y="1.5" :w="19.6" :h="54.5" />
+  <FindyImageRegion class="region-worktree" label="worktree" color="#8b5cf6" :x="2" :y="22.8" :w="17.6" :h="10.7" />
+  <FindyImageRegion label="agents" color="#10b981" :x="0.4" :y="58" :w="19.6" :h="37.5" />
+  <FindyImageRegion class="region-pane" label="フォーカス中のペイン" color="#f59e0b" :x="20.8" :y="0.6" :w="78.8" :h="95.4" />
+</FindyAnnotatedImage>
+
+<style>
+/* worktree 領域は行が詰まっていて既定のラベル位置 (枠内左上) だと行を隠すため、
+   このスライドに限りラベルを枠の右上外側に出す */
+:global(.region-worktree .findy-image-region__label) {
+  top: auto;
+  /* 枠の上辺 border に接して置く (同色なので繋がって見える) */
+  bottom: 100%;
+  left: auto;
+  right: -2.5px;
+  border-radius: 4px 4px 0 0;
+}
+/* ペインのラベルは既定位置 (枠内左上) だとタブバーを隠すため右上角に寄せる */
+:global(.region-pane .findy-image-region__label) {
+  left: auto;
+  right: -2.5px;
+  border-radius: 0 4px 0 6px;
+}
+</style>
+
+---
+layout: two-cols
+ratio: 1/1
+eyebrow: herdr
+---
+
+# herdr の導入
+
+::left::
+
+インストールは script / Homebrew / Nix flake から選べる
+
+::code-group
+
+```sh [macOS]
+curl -fsSL https://herdr.dev/install.sh | sh
+# または
+brew install herdr
+```
+
+```sh [Linux]
+curl -fsSL https://herdr.dev/install.sh | sh
+```
+
+```sh [windows]
+powershell -ExecutionPolicy Bypass -c "irm https://herdr.dev/install.ps1 | iex"
+```
+
+::
+
+::right::
+
+設定ファイルは dotfiles 側に生成して管理する
+
+<div class="compact-code">
+
+```sh
+mkdir -p ~/dotfiles/.config/herdr
+herdr --default-config \
+  > ~/dotfiles/.config/herdr/config.toml
+```
+
+</div>
+
+<FindyCallout class="mt-4">
+  初回起動時のセットアップ画面を閉じてしまったら <code>onboarding = true</code> にして
+  <code>herdr server stop</code> → <code>herdr</code> で再表示できる。
+  通知などはあとから設定画面 (<code>prefix+s</code>) で変更可能
+</FindyCallout>
+
+<style>
+/* 短いブロックの自動フォント拡大だと install コマンドが横スクロールになるため戻す */
+:global(.compact-code .slidev-code) {
+  /* テーマの自動拡大 (:has を含む高詳細度セレクタ) に勝つため !important */
+  --slidev-code-font-size: 0.95rem !important;
+}
+</style>
+
+---
+layout: content
+eyebrow: herdr
+---
+
+# デフォルト設定ファイル (config.toml)
+
+`herdr --default-config` の出力 (全 278 行)。設定キーはコメントを外した状態
+
+<div class="config-scroll">
+
+::code-group
+
+```toml [元のファイル]
+# herdr configuration
+# Place this file at ~/.config/herdr/config.toml
+
+# Show first-run notification setup on startup.
+# Missing also shows onboarding; set false after you've chosen.
+onboarding = true
+
+[theme]
+# Built-in themes: catppuccin, terminal, tokyo-night, dracula, nord,
+#                  gruvbox, one-dark, solarized, kanagawa, rose-pine,
+#                  vesper
+name = "catppuccin"
+
+# Follow host terminal light/dark appearance and switch Herdr UI themes.
+# Existing manual behavior is unchanged unless this is true.
+auto_switch = false
+dark_name = "catppuccin"
+light_name = "catppuccin-latte"
+
+# Override individual color tokens on top of the base theme.
+# Accepts: hex (#rrggbb), named colors, rgb(r,g,b), or panel_bg = "reset"
+[theme.custom]
+panel_bg = "reset"
+accent = "#f5c2e7"
+red = "#ff6188"
+green = "#a6e3a1"
+
+[terminal]
+# Executable used for new interactive panes.
+# Empty means $SHELL, then /bin/sh.
+default_shell = ""
+
+# Startup mode for new interactive pane shells: "auto", "login", or "non_login".
+# "auto" uses login shells on macOS and keeps the current behavior elsewhere.
+shell_mode = "auto"
+
+# CWD policy for new panes, tabs, and workspaces when no explicit --cwd is provided.
+# Use "follow" to inherit the source pane/workspace, "home" for $HOME,
+# "current" for Herdr's process directory, or a fixed path such as "~/Projects".
+new_cwd = "follow"
+
+[update]
+# Update channel used by background version checks and `herdr update`.
+# Use "stable" for normal releases or "preview" for opt-in preview builds.
+channel = "stable"
+
+# Check herdr.dev for new Herdr versions in the background.
+version_check = true
+
+# Check herdr.dev for remote agent-detection manifest updates in the background.
+manifest_check = true
+
+[keys]
+# Prefix key to enter prefix mode (default: "ctrl+b")
+# Examples: "ctrl+b", "f12", "esc", "-"
+# Action bindings use explicit syntax: "prefix+n" requires the prefix;
+# "ctrl+alt+n" is a direct terminal-mode shortcut.
+# Accepted key syntax: plain keys, ctrl/shift/alt/cmd/super modifiers, and special keys like enter/tab/esc/left/right/up/down.
+# Named punctuation such as minus, comma, ampersand, plus, and backtick is also accepted.
+# Most reliable direct bindings are ctrl+letter, function keys, and explicit modified chords.
+# alt+..., cmd/super, and punctuation-with-modifiers may depend on your terminal/tmux setup.
+prefix = "ctrl+b"
+
+# Prefix-mode actions
+help = "prefix+?"
+settings = "prefix+s"
+detach = "prefix+q"
+reload_config = "prefix+shift+r"
+open_notification_target = "prefix+o"
+workspace_picker = "prefix+w"
+goto = "prefix+g"
+new_workspace = "prefix+shift+n"
+new_worktree = "prefix+shift+g"
+open_worktree = ""    # optional, unset by default
+remove_worktree = ""  # optional, unset by default; opens confirmation
+rename_workspace = "prefix+shift+w"
+close_workspace = "prefix+shift+d"
+previous_workspace = "" # optional, unset by default
+next_workspace = ""     # optional, unset by default
+previous_agent = ""     # optional, unset by default
+next_agent = ""         # optional, unset by default
+focus_agent = ""        # optional indexed binding, e.g. "prefix+alt+1..9"
+remote_image_paste = "ctrl+v" # only active in herdr --remote; empty disables raw-key image paste
+new_tab = "prefix+c"
+rename_tab = "prefix+shift+t"
+previous_tab = "prefix+p"
+next_tab = "prefix+n"
+switch_tab = "prefix+1..9"
+switch_workspace = ""   # optional indexed binding, e.g. "prefix+shift+1..9"
+close_tab = "prefix+shift+x"
+rename_pane = "prefix+shift+p"
+edit_scrollback = "prefix+e"
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+cycle_pane_next = "prefix+tab"
+cycle_pane_previous = "prefix+shift+tab"
+last_pane = ""          # optional, unset by default; bind e.g. "prefix+tab" for global back-and-forth
+split_vertical = "prefix+v"
+split_horizontal = "prefix+minus"
+close_pane = "prefix+x"
+zoom = "prefix+z"       # legacy alias: fullscreen
+resize_mode = "prefix+r"
+toggle_sidebar = "prefix+b"
+
+# Navigate-mode movement. These local shortcuts win while navigate mode is open.
+# They are independent from focus_pane_*. Do not include prefix+, esc, enter, tab, or 1..9 here.
+navigate_workspace_up = "up"
+navigate_workspace_down = "down"
+navigate_pane_left = "h"      # left arrow always focuses the pane to the left
+navigate_pane_down = "j"
+navigate_pane_up = "k"
+navigate_pane_right = "l"     # right arrow always focuses the pane to the right
+
+# Custom commands use the same binding syntax.
+# type = "shell" runs detached in the background.
+# type = "pane" opens a temporary pane and closes it when the command exits.
+# On Windows, command strings run through cmd.exe /d /c.
+[[keys.command]]
+key = "prefix+alt+g"
+type = "pane"
+command = "lazygit"
+
+# Legacy indexed shortcut config is still parsed for compatibility.
+# Prefer switch_tab, switch_workspace, and focus_agent for new configs.
+[keys.indexed]
+tabs = ""       # e.g. "ctrl" makes ctrl+1..9 switch tabs directly
+workspaces = "" # e.g. "ctrl+shift" makes ctrl+shift+1..9 switch workspaces directly
+agents = ""     # e.g. "alt" makes alt+1..9 focus agent rows directly
+
+[worktrees]
+directory = "~/.herdr/worktrees"
+
+[ui]
+# Sidebar width (auto-scaled based on workspace names, this sets the default)
+sidebar_width = 26
+
+# Minimum sidebar width when expanded (columns)
+sidebar_min_width = 18
+
+# Maximum sidebar width when expanded (columns)
+sidebar_max_width = 36
+
+# Collapsed sidebar presentation: "compact" keeps the narrow status rail, "hidden" uses zero width.
+sidebar_collapsed_mode = "compact"
+
+# Terminal width at or below which Herdr uses the mobile single-column layout.
+# Increase this for foldables, tablets, or wide phone terminals.
+mobile_width_threshold = 64
+
+# Capture mouse input for Herdr's mouse UI.
+# Set false to let the terminal handle normal clicks, such as Cmd-clicking URLs.
+# Pane apps like lazygit and btop can still receive mouse when they request it.
+mouse_capture = true
+
+# Host cursor policy: "auto", "native", or "drawn".
+# "auto" draws Herdr's own cursor on Windows to avoid ConPTY cursor flicker, and uses the native terminal cursor elsewhere.
+# "native" always uses the outer terminal cursor. "drawn" always draws Herdr's cursor as terminal cell content.
+host_cursor = "auto"
+
+# Optional modifier that forwards right-click hold/drag gestures to pane apps instead of opening Herdr's pane menu.
+# Empty/off disables this. Shift is intentionally unsupported because terminals commonly reserve Shift+mouse.
+right_click_passthrough_modifier = ""
+
+# Force a full redraw when the outer terminal regains focus.
+# Set false to reduce visible flashing when switching back to Herdr.
+# Trade-off: rare host terminal surface corruption may persist until the next full redraw.
+redraw_on_focus_gained = true
+
+# Pane scrollback lines to scroll per mouse wheel notch.
+mouse_scroll_lines = 3
+
+# Ask for confirmation before closing a workspace
+confirm_close = true
+
+# Ask for a tab name before creating a new tab.
+# Set false to create tabs immediately with generated names.
+prompt_new_tab_name = true
+
+# Draw borders around split panes.
+pane_borders = true
+
+# Keep split panes visually separated instead of sharing divider borders.
+pane_gaps = true
+
+# Show detected/reported agent labels in split pane borders when no manual pane name is set.
+show_agent_labels_on_pane_borders = false
+
+# Hide the tab row when a workspace has exactly one tab.
+# New tabs can still be created with the configured keybinding.
+hide_tab_bar_when_single_tab = false
+
+# Agent panel ordering: "spaces" (grouped by space) or "priority" (attention queue).
+# "workspaces" is accepted as an alias for "spaces".
+agent_panel_sort = "spaces"
+
+# Accent color for highlights, borders, and navigation UI.
+# Accepts: hex (#89b4fa), named colors (cyan, blue, magenta), or rgb(r,g,b)
+accent = "cyan"
+
+# Background notification popup delivery
+[ui.toast]
+# off = disable pop-up notifications
+# herdr = show in-app toasts
+# terminal = ask the outer terminal to show a desktop notification
+# system = ask the OS notification service directly
+delivery = "off"
+delay_seconds = 1
+
+[ui.toast.herdr]
+position = "bottom-right"
+
+[ui.toast.clipboard]
+enabled = true
+position = "bottom-center"
+
+# Play sounds when agents change state in background workspaces
+[ui.sound]
+enabled = true
+# Optional custom mp3 sound files. Relative paths are resolved from this config file's directory.
+path = "sounds/notification.mp3"   # one mp3 file for all sound notifications
+done_path = "sounds/done.mp3"      # overrides only finished notifications
+request_path = "sounds/request.mp3" # overrides only needs-attention notifications
+
+# Per-agent overrides: default | on | off
+# By default, droid is muted.
+[ui.sound.agents]
+droid = "off"
+
+[session]
+# Resume supported AI-agent panes into their native conversation sessions after
+# a Herdr server restart. Requires official integrations that report session refs.
+resume_agents_on_restore = true
+
+[remote]
+# Whether herdr manages the ssh config used for `herdr --remote`.
+# When true (default), herdr runs remote ssh through a generated config that
+# includes your ~/.ssh/config first and adds ServerAliveInterval/
+# ServerAliveCountMax as fallbacks (so any keepalive values you set yourself
+# still win) to survive idle network/NAT timeouts. Herdr also uses a private
+# per-attach OpenSSH control socket to reuse the first authenticated connection.
+# Set false to run plain ssh against your ssh config unchanged — this does not
+# force keepalive or multiplexing off, it only stops herdr from adding its own.
+manage_ssh_config = true
+
+[experimental]
+# Allow launching herdr from inside a herdr-managed pane.
+allow_nested = false
+# Experimental local Kitty graphics rendering for attached clients.
+# Requires a Kitty graphics-compatible outer terminal.
+kitty_graphics = false
+# Save recent pane screen history across full server restarts.
+pane_history = false
+# While prefix mode is active, temporarily switch the macOS host input
+# source to an ASCII-capable keyboard layout so prefix commands register
+# even when a CJK IME is active, then restore the previous input source
+# when prefix mode exits. macOS only; best-effort. Default: false.
+switch_ascii_input_source_in_prefix = false
+# Expose the focused pane's cursor to the outer terminal so macOS input
+# methods keep tracking the candidate window when TUIs paint their own
+# cursor (Claude Code, pi, codex). Trade-off: extra cursor visible for
+# apps that hide it without painting a replacement (vim normal mode, etc.).
+reveal_hidden_cursor_for_cjk_ime = false
+# Optional allow-list: only reveal for focused panes whose detected agent
+# matches one of these names. Empty means apply to any focused pane.
+# If the list contains no valid names, the reveal does not apply.
+# Accepted: pi, claude, codex, gemini, cursor, devin, cline, opencode,
+# copilot, kimi, kiro, droid, amp, grok, hermes, kilo, qodercli, qoder.
+cjk_ime_agents = []
+# Cursor shape rendered when reveal_hidden_cursor_for_cjk_ime is true.
+# Values: block, steady_block (default), underline, steady_underline, bar, steady_bar.
+cjk_ime_cursor_shape = "steady_block"
+
+[advanced]
+# Maximum scrollback buffer size in bytes retained per pane terminal.
+# Matches Ghostty's default scrollback-limit behavior.
+scrollback_limit_bytes = 10000000
+```
+
+```toml [コメント日本語訳]
+# herdr の設定ファイル
+# このファイルを ~/.config/herdr/config.toml に置く
+
+# 起動時に初回の通知セットアップを表示する。
+# 未設定でもオンボーディングは表示される。選択が済んだら false にする。
+# onboarding = true
+
+[theme]
+# 組み込みテーマ: catppuccin, terminal, tokyo-night, dracula, nord,
+#                 gruvbox, one-dark, solarized, kanagawa, rose-pine,
+#                 vesper
+# name = "catppuccin"
+
+# ホストターミナルのライト/ダーク外観に追従して Herdr UI のテーマを切り替える。
+# これを true にしない限り、従来の手動での挙動は変わらない。
+# auto_switch = false
+# dark_name = "catppuccin"
+# light_name = "catppuccin-latte"
+
+# ベーステーマの上に個別のカラートークンを上書きする。
+# 指定可能: hex (#rrggbb)、色名、rgb(r,g,b)、または panel_bg = "reset"
+# [theme.custom]
+# panel_bg = "reset"
+# accent = "#f5c2e7"
+# red = "#ff6188"
+# green = "#a6e3a1"
+
+[terminal]
+# 新しいインタラクティブペインで使う実行ファイル。
+# 空の場合は $SHELL、次に /bin/sh を使う。
+# default_shell = ""
+
+# 新しいインタラクティブペインのシェルの起動モード: "auto"、"login"、"non_login"。
+# "auto" は macOS ではログインシェルを使い、それ以外では現在の挙動を維持する。
+# shell_mode = "auto"
+
+# --cwd が明示されていないときの、新しいペイン・タブ・ワークスペースの CWD ポリシー。
+# "follow" は元のペイン/ワークスペースを引き継ぐ。"home" は $HOME、
+# "current" は Herdr のプロセスディレクトリ、"~/Projects" のような固定パスも指定できる。
+# new_cwd = "follow"
+
+[update]
+# バックグラウンドのバージョンチェックと `herdr update` が使う更新チャンネル。
+# 通常リリースは "stable"、オプトインのプレビュービルドは "preview" を使う。
+# channel = "stable"
+
+# バックグラウンドで herdr.dev に新しい Herdr バージョンがないか確認する。
+# version_check = true
+
+# バックグラウンドで herdr.dev にエージェント検出マニフェストの更新がないか確認する。
+# manifest_check = true
+
+[keys]
+# prefix モードに入るための prefix キー (デフォルト: "ctrl+b")
+# 例: "ctrl+b", "f12", "esc", "-"
+# アクションのバインドは明示的な構文を使う: "prefix+n" は prefix が必要。
+# "ctrl+alt+n" はターミナルモードの直接ショートカット。
+# 使えるキー構文: 通常のキー、ctrl/shift/alt/cmd/super の修飾キー、enter/tab/esc/left/right/up/down などの特殊キー。
+# minus, comma, ampersand, plus, backtick といった記号の名前指定も使える。
+# 直接バインドとして最も確実なのは ctrl+英字、ファンクションキー、修飾キーを明示したコード。
+# alt+... や cmd/super、修飾キー付きの記号はターミナル/tmux の設定に依存する場合がある。
+# prefix = "ctrl+b"
+
+# prefix モードのアクション
+# help = "prefix+?"
+# settings = "prefix+s"
+# detach = "prefix+q"
+# reload_config = "prefix+shift+r"
+# open_notification_target = "prefix+o"
+# workspace_picker = "prefix+w"
+# goto = "prefix+g"
+# new_workspace = "prefix+shift+n"
+# new_worktree = "prefix+shift+g"
+# open_worktree = ""    # 任意。デフォルトでは未設定
+# remove_worktree = ""  # 任意。デフォルトでは未設定。確認ダイアログを開く
+# rename_workspace = "prefix+shift+w"
+# close_workspace = "prefix+shift+d"
+# previous_workspace = "" # 任意。デフォルトでは未設定
+# next_workspace = ""     # 任意。デフォルトでは未設定
+# previous_agent = ""     # 任意。デフォルトでは未設定
+# next_agent = ""         # 任意。デフォルトでは未設定
+# focus_agent = ""        # 任意のインデックス付きバインド。例: "prefix+alt+1..9"
+# remote_image_paste = "ctrl+v" # herdr --remote でのみ有効。空にすると生キーでの画像ペーストを無効化
+# new_tab = "prefix+c"
+# rename_tab = "prefix+shift+t"
+# previous_tab = "prefix+p"
+# next_tab = "prefix+n"
+# switch_tab = "prefix+1..9"
+# switch_workspace = ""   # 任意のインデックス付きバインド。例: "prefix+shift+1..9"
+# close_tab = "prefix+shift+x"
+# rename_pane = "prefix+shift+p"
+# edit_scrollback = "prefix+e"
+# focus_pane_left = "prefix+h"
+# focus_pane_down = "prefix+j"
+# focus_pane_up = "prefix+k"
+# focus_pane_right = "prefix+l"
+# cycle_pane_next = "prefix+tab"
+# cycle_pane_previous = "prefix+shift+tab"
+# last_pane = ""          # 任意。デフォルトでは未設定。"prefix+tab" などを割り当てるとグローバルに行き来できる
+# split_vertical = "prefix+v"
+# split_horizontal = "prefix+minus"
+# close_pane = "prefix+x"
+# zoom = "prefix+z"       # 旧エイリアス: fullscreen
+# resize_mode = "prefix+r"
+# toggle_sidebar = "prefix+b"
+
+# navigate モードの移動キー。navigate モードが開いている間はこのローカルショートカットが優先される。
+# focus_pane_* とは独立。prefix+、esc、enter、tab、1..9 はここに含めないこと。
+# navigate_workspace_up = "up"
+# navigate_workspace_down = "down"
+# navigate_pane_left = "h"      # 左矢印は常に左のペインにフォーカスする
+# navigate_pane_down = "j"
+# navigate_pane_up = "k"
+# navigate_pane_right = "l"     # 右矢印は常に右のペインにフォーカスする
+
+# カスタムコマンドも同じバインド構文を使う。
+# type = "shell" はバックグラウンドでデタッチ実行する。
+# type = "pane" は一時的なペインを開き、コマンド終了時に閉じる。
+# Windows ではコマンド文字列は cmd.exe /d /c 経由で実行される。
+# [[keys.command]]
+# key = "prefix+alt+g"
+# type = "pane"
+# command = "lazygit"
+
+# 旧形式のインデックス付きショートカット設定も互換性のため引き続き読み込まれる。
+# 新しい設定では switch_tab, switch_workspace, focus_agent を推奨。
+# [keys.indexed]
+# tabs = ""       # 例: "ctrl" にすると ctrl+1..9 で直接タブを切り替え
+# workspaces = "" # 例: "ctrl+shift" にすると ctrl+shift+1..9 で直接ワークスペースを切り替え
+# agents = ""     # 例: "alt" にすると alt+1..9 で直接エージェント行にフォーカス
+
+# [worktrees]
+# directory = "~/.herdr/worktrees"
+
+[ui]
+# サイドバーの幅 (ワークスペース名に応じて自動スケールする。これはそのデフォルト値)
+# sidebar_width = 26
+
+# 展開時のサイドバーの最小幅 (桁数)
+# sidebar_min_width = 18
+
+# 展開時のサイドバーの最大幅 (桁数)
+# sidebar_max_width = 36
+
+# 折りたたみ時のサイドバー表示: "compact" は細いステータスレールを残し、"hidden" は幅ゼロにする。
+# sidebar_collapsed_mode = "compact"
+
+# この値以下のターミナル幅では Herdr がモバイル用の 1 カラムレイアウトを使う。
+# フォルダブルやタブレット、幅広のスマホターミナルでは大きくするとよい。
+# mobile_width_threshold = 64
+
+# Herdr のマウス UI のためにマウス入力をキャプチャする。
+# false にすると通常のクリック (Cmd+クリックで URL を開くなど) をターミナル側に任せる。
+# lazygit や btop のようなペイン内アプリは、要求すれば引き続きマウス入力を受け取れる。
+# mouse_capture = true
+
+# ホストカーソルのポリシー: "auto"、"native"、"drawn"。
+# "auto" は Windows では ConPTY のカーソルちらつきを避けるため Herdr 自身のカーソルを描画し、それ以外ではネイティブのターミナルカーソルを使う。
+# "native" は常に外側ターミナルのカーソルを使う。"drawn" は常に Herdr のカーソルをターミナルのセル内容として描画する。
+# host_cursor = "auto"
+
+# 右クリックの長押し/ドラッグ操作を、Herdr のペインメニューを開く代わりにペイン内アプリへ転送するための任意の修飾キー。
+# 空/オフで無効。ターミナルは一般に Shift+マウスを予約しているため、Shift は意図的に非対応。
+# right_click_passthrough_modifier = ""
+
+# 外側のターミナルがフォーカスを取り戻したときに全体を再描画する。
+# false にすると Herdr に戻ったときの目に見えるちらつきを減らせる。
+# トレードオフ: まれなホストターミナルの表示乱れが次の全体再描画まで残ることがある。
+# redraw_on_focus_gained = true
+
+# マウスホイール 1 ノッチあたりにスクロールするペインのスクロールバック行数。
+# mouse_scroll_lines = 3
+
+# ワークスペースを閉じる前に確認する
+# confirm_close = true
+
+# 新しいタブを作る前にタブ名を尋ねる。
+# false にすると自動生成された名前で即座にタブを作る。
+# prompt_new_tab_name = true
+
+# 分割ペインの周りに枠線を描く。
+# pane_borders = true
+
+# 分割ペイン同士に境界線を共有させず、視覚的に離して表示する。
+# pane_gaps = true
+
+# 手動のペイン名が付いていないとき、分割ペインの枠線に検出/報告されたエージェントのラベルを表示する。
+# show_agent_labels_on_pane_borders = false
+
+# ワークスペースのタブがちょうど 1 つのときタブ行を隠す。
+# 設定済みのキーバインドで新しいタブは引き続き作成できる。
+# hide_tab_bar_when_single_tab = false
+
+# エージェントパネルの並び順: "spaces" (スペースごとにグループ化) または "priority" (要対応キュー)。
+# "workspaces" は "spaces" のエイリアスとして受け付ける。
+# agent_panel_sort = "spaces"
+
+# ハイライト・枠線・ナビゲーション UI のアクセントカラー。
+# 指定可能: hex (#89b4fa)、色名 (cyan, blue, magenta)、rgb(r,g,b)
+# accent = "cyan"
+
+# バックグラウンド通知ポップアップの配信方法
+[ui.toast]
+# off = ポップアップ通知を無効化
+# herdr = アプリ内トーストで表示
+# terminal = 外側のターミナルにデスクトップ通知の表示を依頼
+# system = OS の通知サービスに直接依頼
+# delivery = "off"
+# delay_seconds = 1
+
+[ui.toast.herdr]
+# position = "bottom-right"
+
+[ui.toast.clipboard]
+# enabled = true
+# position = "bottom-center"
+
+# バックグラウンドのワークスペースでエージェントの状態が変わったときに音を鳴らす
+[ui.sound]
+# enabled = true
+# 任意のカスタム mp3 サウンドファイル。相対パスはこの設定ファイルのディレクトリから解決される。
+# path = "sounds/notification.mp3"   # すべてのサウンド通知に使う 1 つの mp3 ファイル
+# done_path = "sounds/done.mp3"      # 完了通知のみを上書き
+# request_path = "sounds/request.mp3" # 要対応通知のみを上書き
+
+# エージェントごとの上書き: default | on | off
+# デフォルトでは droid はミュート。
+# [ui.sound.agents]
+# droid = "off"
+
+[session]
+# Herdr サーバーの再起動後、対応する AI エージェントのペインをネイティブの
+# 会話セッションへ復帰させる。セッション参照を報告する公式インテグレーションが必要。
+# resume_agents_on_restore = true
+
+[remote]
+# `herdr --remote` で使う ssh 設定を herdr が管理するかどうか。
+# true (デフォルト) の場合、herdr はリモート ssh を生成した設定ファイル経由で実行する。
+# その設定はまず ~/.ssh/config を include し、アイドル時のネットワーク/NAT タイムアウトを
+# 乗り切るためのフォールバックとして ServerAliveInterval/ServerAliveCountMax を追加する
+# (自分で設定した keepalive 値があればそちらが優先される)。また herdr は最初に認証した
+# 接続を再利用するため、アタッチごとの専用 OpenSSH コントロールソケットを使う。
+# false にすると ssh 設定に手を加えないプレーンな ssh を実行する — keepalive や多重化を
+# 強制的にオフにするわけではなく、herdr が独自設定を追加しなくなるだけ。
+# manage_ssh_config = true
+
+[experimental]
+# herdr 管理下のペインの中から herdr を起動できるようにする。
+# allow_nested = false
+# アタッチ中のクライアント向けの実験的なローカル Kitty グラフィックス描画。
+# Kitty グラフィックス互換の外側ターミナルが必要。
+# kitty_graphics = false
+# サーバーの完全再起動をまたいで直近のペイン画面履歴を保存する。
+pane_history = false
+# prefix モードが有効な間、macOS のホスト入力ソースを一時的に ASCII 対応の
+# キーボードレイアウトへ切り替え、CJK IME が有効でも prefix コマンドが
+# 効くようにする。prefix モード終了時に元の入力ソースへ戻す。
+# macOS のみ。ベストエフォート。デフォルト: false。
+# switch_ascii_input_source_in_prefix = false
+# TUI が独自にカーソルを描画する場合 (Claude Code, pi, codex) でも macOS の
+# 入力メソッドが変換候補ウィンドウを追従できるよう、フォーカス中ペインの
+# カーソルを外側ターミナルへ公開する。トレードオフ: 代わりのカーソルを描画せずに
+# カーソルを隠すアプリ (vim のノーマルモードなど) では余分なカーソルが見える。
+# reveal_hidden_cursor_for_cjk_ime = false
+# 任意の許可リスト: 検出されたエージェントがこの名前のいずれかに一致する
+# フォーカス中ペインでのみカーソルを公開する。空の場合はどのフォーカス中ペインにも適用する。
+# リストに有効な名前が 1 つもない場合、公開は適用されない。
+# 指定可能: pi, claude, codex, gemini, cursor, devin, cline, opencode,
+# copilot, kimi, kiro, droid, amp, grok, hermes, kilo, qodercli, qoder.
+# cjk_ime_agents = []
+# reveal_hidden_cursor_for_cjk_ime が true のときに描画するカーソル形状。
+# 値: block, steady_block (デフォルト), underline, steady_underline, bar, steady_bar。
+# cjk_ime_cursor_shape = "steady_block"
+
+[advanced]
+# ペインのターミナルごとに保持するスクロールバックバッファの最大サイズ (バイト)。
+# Ghostty のデフォルトの scrollback-limit の挙動に合わせている。
+# scrollback_limit_bytes = 10000000
+```
+
+```toml [コメント抜き]
+onboarding = true
+
+[theme]
+name = "catppuccin"
+auto_switch = false
+dark_name = "catppuccin"
+light_name = "catppuccin-latte"
+
+[terminal]
+default_shell = ""
+shell_mode = "auto"
+new_cwd = "follow"
+
+[update]
+channel = "stable"
+version_check = true
+manifest_check = true
+
+[keys]
+prefix = "ctrl+b"
+help = "prefix+?"
+settings = "prefix+s"
+detach = "prefix+q"
+reload_config = "prefix+shift+r"
+open_notification_target = "prefix+o"
+workspace_picker = "prefix+w"
+goto = "prefix+g"
+new_workspace = "prefix+shift+n"
+new_worktree = "prefix+shift+g"
+open_worktree = ""
+remove_worktree = ""
+rename_workspace = "prefix+shift+w"
+close_workspace = "prefix+shift+d"
+previous_workspace = ""
+next_workspace = ""
+previous_agent = ""
+next_agent = ""
+focus_agent = ""
+remote_image_paste = "ctrl+v"
+new_tab = "prefix+c"
+rename_tab = "prefix+shift+t"
+previous_tab = "prefix+p"
+next_tab = "prefix+n"
+switch_tab = "prefix+1..9"
+switch_workspace = ""
+close_tab = "prefix+shift+x"
+rename_pane = "prefix+shift+p"
+edit_scrollback = "prefix+e"
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+cycle_pane_next = "prefix+tab"
+cycle_pane_previous = "prefix+shift+tab"
+last_pane = ""
+split_vertical = "prefix+v"
+split_horizontal = "prefix+minus"
+close_pane = "prefix+x"
+zoom = "prefix+z"
+resize_mode = "prefix+r"
+toggle_sidebar = "prefix+b"
+navigate_workspace_up = "up"
+navigate_workspace_down = "down"
+navigate_pane_left = "h"
+navigate_pane_down = "j"
+navigate_pane_up = "k"
+navigate_pane_right = "l"
+
+[keys.indexed]
+tabs = ""
+workspaces = ""
+agents = ""
+
+[worktrees]
+directory = "~/.herdr/worktrees"
+
+[ui]
+sidebar_width = 26
+sidebar_min_width = 18
+sidebar_max_width = 36
+sidebar_collapsed_mode = "compact"
+mobile_width_threshold = 64
+mouse_capture = true
+host_cursor = "auto"
+right_click_passthrough_modifier = ""
+redraw_on_focus_gained = true
+mouse_scroll_lines = 3
+confirm_close = true
+prompt_new_tab_name = true
+pane_borders = true
+pane_gaps = true
+show_agent_labels_on_pane_borders = false
+hide_tab_bar_when_single_tab = false
+agent_panel_sort = "spaces"
+accent = "cyan"
+
+[ui.toast]
+delivery = "off"
+delay_seconds = 1
+
+[ui.toast.herdr]
+position = "bottom-right"
+
+[ui.toast.clipboard]
+enabled = true
+position = "bottom-center"
+
+[ui.sound]
+enabled = true
+
+[ui.sound.agents]
+droid = "off"
+
+[session]
+resume_agents_on_restore = true
+
+[remote]
+manage_ssh_config = true
+
+[experimental]
+allow_nested = false
+kitty_graphics = false
+pane_history = false
+switch_ascii_input_source_in_prefix = false
+reveal_hidden_cursor_for_cjk_ime = false
+cjk_ime_agents = []
+cjk_ime_cursor_shape = "steady_block"
+
+[advanced]
+scrollback_limit_bytes = 10000000
+```
+
+::
+
+</div>
+
+<style>
+/* 278 行のブロックをスライド内で縦スクロールさせる (コピペ用に折り返し・省略はしない)。
+   長い行でカードがスライド右端を越えると縦スクロールバーが見えなくなるため幅も抑える。
+   content レイアウトの .content-body は flex アイテム (min-width: auto) で内容幅まで広がるので打ち消す */
+:global(.content-body:has(.config-scroll)) {
+  min-width: 0;
+  max-width: 100%;
+}
+:global(.config-scroll .slidev-code-group) {
+  max-width: 100%;
+}
+:global(.config-scroll .slidev-code) {
+  max-height: 20rem;
+  max-width: 100%;
+  overflow: auto !important;
+}
+</style>
+
+---
+layout: two-cols
+ratio: 1/1
+eyebrow: herdr
+---
+
+# prefix キーを何にするか
+
+::left::
+
+キーバインドの起点となるキー (デフォルト: `ctrl+b`)
+
+設定ファイルの例はどれも採用しなかった
+
+<div class="mt-4">
+  <FindyKeyValue size="1.02rem" label="ctrl+b">emacs の backward-char と被る</FindyKeyValue>
+  <FindyKeyValue size="1.02rem" label="f12">ホームポジションから遠い</FindyKeyValue>
+  <FindyKeyValue size="1.02rem" label="esc">emacs の Meta (M-) キーと被る</FindyKeyValue>
+  <FindyKeyValue size="1.02rem" label="-"><code>cd -</code> の abbreviation と被る</FindyKeyValue>
+</div>
+
+::right::
+
+WezTerm の Leader は `ctrl+;` にしたので、
+`ctrl+q` が空いている → herdr の prefix に採用
+
+```toml
+prefix = "ctrl+q"
+```
+
+<FindyCallout variant="warn" class="mt-4">
+  <code>ctrl+q</code> はフロー制御 (XON) のキー。
+  zsh で <code>stty -ixon</code> を設定済みなら競合しない
+</FindyCallout>
+
+---
+layout: content
+eyebrow: herdr
+---
+
+# なぜ WezTerm が `ctrl+;` で herdr が `ctrl+q`?
+
+キーの「届く範囲」で振り分けた
+
+- `ctrl+;` は**従来の端末キーエンコーディングに無い**
+  - シェルや fzf に届かない → WezTerm が握っても衝突しにくい
+  - kitty keyboard protocol 対応の TUI には届くが、WezTerm が先取りすれば問題ない
+- herdr の prefix は**端末を選ばず確実に効くキー**にしたい
+  - 公式設定にも「修飾付き記号は端末依存」と注記 → `ctrl+q` を採用
+
+<FindyCallout class="mt-4">
+  <code>ctrl+s</code> も候補だったが、nvim の git UI で submit に使われていたため除外
+</FindyCallout>
+
+---
+layout: two-cols
+ratio: 1/1
+eyebrow: herdr
+---
+
+# よく使う herdr キーバインド
+
+::left::
+
+```toml [ペイン操作]
+split_vertical = "prefix+v"      # 縦に分割
+split_horizontal = "prefix+minus" # 横に分割
+focus_pane_left = "prefix+h"     # ← ペイン移動
+focus_pane_down = "prefix+j"     # ↓
+focus_pane_up = "prefix+k"       # ↑
+focus_pane_right = "prefix+l"    # →
+zoom = "prefix+z"                # ペームをズーム
+close_pane = "prefix+x"          # ペインを閉じる
+resize_mode = "prefix+r"         # リサイズモード
+```
+
+::right::
+
+```toml [タブ・ワークスペース]
+new_tab = "prefix+c"         # 新しいタブ
+next_tab = "prefix+n"        # 次のタブ
+previous_tab = "prefix+p"    # 前のタブ
+switch_tab = "prefix+1..9"   # タブを番号で切替
+workspace_picker = "prefix+w" # ワークスペースピッカー
+help = "prefix+?"            # 全キー一覧
+settings = "prefix+s"        # 設定画面
+```
+
+<FindyCallout class="mt-4">
+  <code>prefix+?</code> で全キーバインドを確認できるので、まず覚えるのはこれだけ
+</FindyCallout>
+
+---
+layout: two-cols
+ratio: 1/1
+eyebrow: herdr
+---
+
+# 設定のリロードを楽にする
+
+::left::
+
+config.toml の変更はコマンドで反映できる
+
+```sh
+herdr server reload-config
+```
+
+これを WezTerm のコマンドパレット
+(`Ctrl+Shift+P`) に登録した
+
+<div class="mt-4">
+  <FindyKeyValue size="0.95rem" label="実行方法">ペインは開かずバックグラウンド</FindyKeyValue>
+  <FindyKeyValue size="0.95rem" label="PATH">ログインシェル経由 (<code>-lic</code>) で確保</FindyKeyValue>
+</div>
+
+::right::
+
+```lua [.config/wezterm/keymaps.lua]
+-- augment-command-palette 内
+{
+  brief = "Herdr: Reload config",
+  icon = "md_refresh",
+  action = wezterm.action_callback(function(window, pane)
+    wezterm.background_child_process({
+      os.getenv("SHELL") or "/bin/zsh",
+      "-lic",
+      "herdr server reload-config",
+    })
+  end),
+},
+```
+
+---
+layout: two-cols
+ratio: 1/1
+eyebrow: herdr
+---
+
+# 公式インテグレーション
+
+::left::
+
+herdr は各 AI エージェントの<FindyAccentMark>**公式スキル**</FindyAccentMark>を提供している
+
+インストールすると、エージェントが `herdr` CLI でペインの作成・操作・読み取りをできるようになる
+
+```sh
+# インストール
+herdr integration install claude
+
+# ステータス確認
+herdr integration status
+```
+
+::right::
+
+対応エージェント（一部）
+
+<div class="mt-4 text-[1.05rem]">
+
+- [Claude Code](https://claude.ai/code)
+- [Codex](https://github.com/openai/codex)
+- [Copilot](https://github.com/features/copilot)
+- [Cursor](https://cursor.com)
+- [Devin](https://devin.ai)
+- 他 9 種…
+
+</div>
+
+<FindyRef>
+
+[herdr integration](https://herdr.dev)
+
+</FindyRef>
+
+---
+layout: two-cols
+ratio: 1/1
+eyebrow: herdr
+---
+
+# herdr は AI からも操作できる
+
+::left::
+
+Claude Code に herdr スキルを入れると、
+エージェント自身が `herdr` CLI でペインを操作できる
+
+<div class="mt-4">
+  <FindyKeyValue size="1.02rem" label="発動条件">依頼で Herdr を明示したとき</FindyKeyValue>
+  <FindyKeyValue size="1.02rem" label="前提">Herdr 管理ペイン内 (<code>HERDR_ENV=1</code>)</FindyKeyValue>
+</div>
+
+例: 「Issue #42 を実装して、herdr でペイン作って進めて」
+
+::right::
+
+隣のペインにエージェントが生えて、並列に作業が回る
+
+<div class="mt-2">
+  <FindyKeyValue size="1.02rem" label="1. split">隣にペインを作る</FindyKeyValue>
+  <FindyKeyValue size="1.02rem" label="2. run">claude を対話起動してタスクを投入</FindyKeyValue>
+  <FindyKeyValue size="1.02rem" label="3. wait">working → done を待つ</FindyKeyValue>
+  <FindyKeyValue size="1.02rem" label="4. read">結果を読んで回収</FindyKeyValue>
+</div>
+
+
+---
+layout: two-cols
+ratio: 1/1
+eyebrow: herdr
+---
+
+# Claude が裏で叩いているコマンド
+
+::left::
+
+<div class="compact-code">
+
+```sh
+# 隣にペインを作る (フォーカスは奪わない)
+herdr pane split --current \
+  --direction right --no-focus
+
+# 返ってきた pane ID で claude を対話起動
+herdr pane run w1:p2 "claude"
+
+# プロンプトが開いたらタスクを投入
+herdr pane run w1:p2 "Issue #42 を実装して"
+```
+
+</div>
+
+::right::
+
+<div class="compact-code">
+
+```sh
+# ステータスを確認
+herdr pane get w1:p2
+
+# 完了を待って結果を読む
+herdr wait agent-status w1:p2 --status done
+herdr pane read w1:p2 \
+  --source recent-unwrapped
+```
+
+</div>
+
+<FindyCallout class="mt-4">
+  ファイルを編集するタスクは <code>herdr worktree create</code> で
+  checkout ごと分離してからペインを開くと、手元の作業と衝突しない
+</FindyCallout>
+
+<style>
+/* 短いブロックの自動フォント拡大だと横スクロールになるため戻す */
+:global(.compact-code .slidev-code) {
+  --slidev-code-font-size: 0.95rem !important;
+}
+</style>

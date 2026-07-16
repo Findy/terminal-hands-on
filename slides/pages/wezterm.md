@@ -1,0 +1,287 @@
+---
+layout: section
+color: blue
+toc: ターミナルエミュレータ
+---
+
+# ターミナルエミュレータ
+
+---
+eyebrow: wezterm
+layout: web-half
+url: https://github.com/wezterm/wezterm
+image: /screenshots/wezterm-site.png
+caption: WezTerm 公式サイト
+---
+
+# WezTerm とは
+
+Rust 製の ターミナルエミュレータ
+
+
+- Luaなので条件分岐ができる
+- **`leader`キー**や**キーテーブル**でキー操作が柔軟
+- 繰り返し操作を一つのキーバインドにまとめられる
+- CLIコマンドがある
+- 設定が自動で反映される
+
+
+---
+layout: content
+eyebrow: wezterm
+---
+
+# WezTerm のインストール
+
+::code-group
+
+```sh [macOS]
+brew install --cask wezterm
+
+# nightly 版 (最新機能を試したい場合)
+brew install --cask wezterm@nightly
+```
+
+```sh [Linux (Ubuntu/Debian)]
+curl -fsSL https://apt.fury.io/wez/gpg.key \
+  | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
+echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' \
+  | sudo tee /etc/apt/sources.list.d/wezterm.list
+sudo chmod 644 /usr/share/keyrings/wezterm-fury.gpg
+sudo apt update && sudo apt install wezterm
+```
+
+```powershell [Windows]
+winget install wez.wezterm
+
+# Scoop (extras バケット) や Chocolatey でも入る
+```
+
+::
+
+<FindyRef>
+
+[macOS](https://wezterm.org/install/macos.html) / [Linux](https://wezterm.org/install/linux.html) / [Windows](https://wezterm.org/install/windows.html)
+
+</FindyRef>
+
+<FindyCallout class="mt-3">
+  Linux は Flatpak (<code>flatpak install flathub org.wezfurlong.wezterm</code>) や
+  AppImage、Arch の <code>pacman -S wezterm</code> などディストリごとの手段もある
+</FindyCallout>
+
+---
+layout: content
+eyebrow: wezterm
+---
+
+# Windows は WSL 上で進める
+
+<FindyCallout class="mb-3">
+  このハンズオンのシェル / CLI 操作は <FindyAccentMark>WSL (Ubuntu)</FindyAccentMark> 上で行う。
+  Windows の人は WezTerm を WSL につないでおく
+</FindyCallout>
+
+::code-group
+
+```powershell [1. WSL を入れる (管理者 PowerShell)]
+wsl --install
+# デフォルトで Ubuntu が入る。再起動後、
+# 初回起動時に Linux のユーザー名とパスワードを設定する
+```
+
+```lua [2. WezTerm の起動先を WSL にする]
+-- ~/.config/wezterm/wezterm.lua
+-- ドメイン名は "WSL:" + ディストリビューション名 (wsl -l -v で確認)
+config.default_domain = "WSL:Ubuntu"
+```
+
+::
+
+<FindyRef>
+
+[WSL のインストール](https://learn.microsoft.com/ja-jp/windows/wsl/install) / [default_domain](https://wezterm.org/config/lua/config/default_domain.html) / [WslDomain](https://wezterm.org/config/lua/WslDomain.html)
+
+</FindyRef>
+
+---
+layout: two-cols
+ratio: 1/1
+eyebrow: wezterm
+---
+
+# 設定ファイルの準備
+
+::left::
+
+
+```bash
+# dotfiles 配下に WezTerm の設定ファイルを置く
+mkdir -p ~/dotfiles/.config/wezterm
+touch ~/dotfiles/.config/wezterm/wezterm.lua
+
+# シンボリックリンクを貼る
+ln -s ~/dotfiles/.config/wezterm/wezterm.lua ~/.config/wezterm/wezterm.lua
+```
+
+<FindyRef label="ref">
+<a href="https://wezterm.org/config/files.html">Configuration - Wez's Terminal Emulator</a>
+</FindyRef>
+
+::right::
+
+```lua [~/.config/wezterm/wezterm.lua]
+-- wezterm API を組み込む
+local wezterm = require("wezterm")
+
+-- ここに設定内容を記述していく
+local config = wezterm.config_builder()
+
+-- 設定ファイルの変更を自動で読み込む
+config.automatically_reload_config = true
+
+-- 最後に、weztermに設定を戻す
+return config
+```
+
+---
+layout: two-cols
+ratio: 1/1
+eyebrow: wezterm
+---
+
+# フォントの設定
+
+::left::
+
+フォントは[HackGen](https://github.com/yuru7/HackGen)が好きなため、このフォントをインストールして設定していく
+
+::code-group
+
+```sh [macOS]
+brew install font-hackgen
+brew install font-hackgen-nerd
+```
+
+```sh [Windows (WSL)]
+# GitHub Releases からダウンロードして手動インストール
+# https://github.com/yuru7/HackGen/releases
+# HackGen_NF_vX.X.X.zip を展開し、
+# .ttf ファイルを右クリック → 「インストール」
+```
+
+```sh [Linux]
+# Ubuntu/Debian
+sudo apt install fonts-hackgen
+
+# Arch Linux
+sudo pacman -S otf-hackgen-nerd
+```
+
+::
+
+<FindyRef label="ref">
+<a href="https://github.com/yuru7/HackGen">yuru7/HackGen: Hack と源柔ゴシックを合成したプログラミングフォント 白源</a>
+</FindyRef>
+
+::right::
+
+```lua [~/.config/wezterm/wezterm.lua]
+local wezterm = require("wezterm")
+local config = wezterm.config_builder()
+
+config.automatically_reload_config = true
+
+config.font_size = 14.0 -- [!code ++]
+config.font = wezterm.font("HackGen Console NF") -- [!code ++]
+
+return config
+```
+
+---
+layout: two-cols
+ratio: 1/1
+eyebrow: wezterm
+---
+
+# 見た目: 背景透過 + ぼかし
+
+::left::
+
+人類皆一度はスケスケのターミナルに憧れる
+
+<div class="mt-4">
+  <FindyKeyValue size="1.02rem" label="透過">opacity 0.85 でほどよい透け感</FindyKeyValue>
+  <FindyKeyValue size="1.02rem" label="ぼかし">blur 20 で文字の視認性を確保</FindyKeyValue>
+</div>
+
+<p class="takeaway mt-8">2 行で<FindyAccentMark><strong>気分がブチ上がる</strong></FindyAccentMark></p>
+
+::right::
+
+`~/.config/wezterm/wezterm.lua`:
+
+::code-group
+
+```lua [macOS]
+local wezterm = require("wezterm")
+local config = wezterm.config_builder()
+
+-- 背景を透過 -- [!code ++]
+config.window_background_opacity = 0.85 -- [!code ++]
+-- ぼかしを追加 -- [!code ++]
+config.macos_window_background_blur = 20-- [!code ++]
+
+
+return config
+```
+
+```lua [Windows]
+local wezterm = require("wezterm")
+local config = wezterm.config_builder()
+
+-- 背景を透過
+config.window_background_opacity = 0.85
+-- ぼかしを追加 (Acrylic 効果)
+config.win32_system_backdrop = "Acrylic"
+
+return config
+```
+
+```lua [Linux]
+local wezterm = require("wezterm")
+local config = wezterm.config_builder()
+
+-- 背景を透過 (X11 は picom 等が必要なことも)
+config.window_background_opacity = 0.85
+-- ぼかしを追加 (Wayland + KDE Plasma のみ)
+config.wayland_window_background_blur = true
+
+return config
+```
+
+::
+
+---
+layout: content
+eyebrow: wezterm
+---
+
+# タブバーもカスタマイズできる
+
+```lua [~/.config/wezterm/wezterm.lua]
+-- タイトルバーを非表示 / タブが 1 つならタブバーも非表示
+config.window_decorations = "RESIZE"
+config.hide_tab_bar_if_only_one_tab = true
+
+-- アクティブなタブだけ黄色にする
+wezterm.on("format-tab-title", function(tab)
+  local bg = tab.is_active and "#ae8b2d" or "#5c6d74"
+  return {
+    { Background = { Color = bg } },
+    { Text = " " .. tab.active_pane.title .. " " },
+  }
+end)
+```
+
+

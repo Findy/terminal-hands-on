@@ -1,37 +1,40 @@
 ---
-# 使うテーマに置換する (npm 公開テーマ名 or ローカルパス)
-theme: CHANGE_ME
-title: CHANGE_ME タイトル
+theme: findy
+title: 学生向けハンズオン～イケてるターミナルをつくろう！～
 info: |
-  イベント名
-  CHANGE_ME タイトル
+  Findy Student 2026.7.17
+  学生向けハンズオン～イケてるターミナルをつくろう！～
 class: text-left
 comark: true
 favicon: https://github.com/mozumasu.png
 addons:
-  - slidev-addon-CHANGE_ME
+  - slidev-addon-findy
 layout: talk-cover
-event: イベント名 2026.1.1
+event: Findy Student 2026.7.17
 image: https://github.com/mozumasu.png
 name: mozumasu
-role: CHANGE_ME 所属 / 役職
+role: Findy Inc. / SRE
 ---
 
-## サブタイトル
-# CHANGE_ME タイトル
+## 学生向けハンズオン
+# イケてるターミナルをつくろう！
 
 ---
 layout: profile
 image: https://github.com/mozumasu.png
 name: mozumasu
-role: CHANGE_ME 所属 / 役職
+role: Findy Inc. / SRE
 ---
 
 ## 自己紹介
 
 - 開発環境: MacOS / WezTerm / Neovim / macSKK
+- 一言: Flappy syumaiの最高得点は7点でした
 
-- X: @mozumasu / GitHub: mozumasu
+<div class="mt-4 flex flex-wrap gap-2">
+  <FindyBadge variant="soft">X: @mozumasu</FindyBadge>
+  <FindyBadge variant="soft">GitHub: mozumasu</FindyBadge>
+</div>
 
 ---
 layout: toc
@@ -39,21 +42,45 @@ columns: 1
 ---
 
 ---
-layout: section
-color: blue
-toc: セクション 1
+src: ./pages/terminal-beginner.md
 ---
 
-# セクション 1
+---
+src: ./pages/wezterm.md
+---
+
+---
+src: ./pages/shell.md
+---
+
+---
+src: ./pages/wezterm-keybinds.md
+---
+
+---
+src: ./pages/herdr.md
+---
+
+---
+src: ./pages/workflow.md
+---
 
 ---
 layout: content
+toc: まとめ
 ---
 
-# 本文スライド
+# まとめ
 
-- 見出しは frontmatter の title ではなく本文の `#` で書く
-- 画像はデッキの `public/` に置き、`:src="'/...'"` のバインディング形式で参照する
+- **ターミナル** — WezTerm は Lua で見た目もキーバインドも自分好みにできる
+- **シェル** — Emacs バインドを覚えると速い。CapsLock → Ctrl も効果大
+- **キーバインド** — 内側（シェル）→ 外側（ターミナル）の順で設定すると衝突しない
+- **マルチプレクサ** — herdr でターミナルを分割管理。AI エージェントとも協業できる
+- **ワークフロー** — ghost・portless・worktree の組み合わせで開発が回る
+
+<FindyCallout class="mt-4">
+  設定はすべて <code>~/.config/</code> 以下のファイル。dotfiles として Git 管理すればどの環境でも再現できる
+</FindyCallout>
 
 ---
 layout: end
