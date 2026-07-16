@@ -141,8 +141,7 @@ herdr --default-config \
 <style>
 /* 短いブロックの自動フォント拡大だと install コマンドが横スクロールになるため戻す */
 :global(.compact-code .slidev-code) {
-  /* テーマの自動拡大 (:has を含む高詳細度セレクタ) に勝つため !important */
-  --slidev-code-font-size: 0.95rem !important;
+  --slidev-code-font-size: 0.95rem;
 }
 </style>
 
@@ -155,7 +154,7 @@ eyebrow: herdr
 
 `herdr --default-config` の出力 (全 278 行)。タブでコメントの日本語訳・コメント抜き版に切り替えられる
 
-<div class="config-scroll">
+<div class="code-scroll">
 
 ::code-group
 
@@ -858,24 +857,6 @@ scrollback_limit_bytes = 10000000
 
 </div>
 
-<style>
-/* 278 行のブロックをスライド内で縦スクロールさせる (コピペ用に折り返し・省略はしない)。
-   長い行でカードがスライド右端を越えると縦スクロールバーが見えなくなるため幅も抑える。
-   content レイアウトの .content-body は flex アイテム (min-width: auto) で内容幅まで広がるので打ち消す */
-:global(.content-body:has(.config-scroll)) {
-  min-width: 0;
-  max-width: 100%;
-}
-:global(.config-scroll .slidev-code-group) {
-  max-width: 100%;
-}
-:global(.config-scroll .slidev-code) {
-  max-height: 16rem;
-  max-width: 100%;
-  overflow: auto !important;
-}
-</style>
-
 ---
 layout: two-cols
 ratio: 1/1
@@ -1133,6 +1114,6 @@ herdr pane read w1:p2 \
 <style>
 /* 短いブロックの自動フォント拡大だと横スクロールになるため戻す */
 :global(.compact-code .slidev-code) {
-  --slidev-code-font-size: 0.95rem !important;
+  --slidev-code-font-size: 0.95rem;
 }
 </style>

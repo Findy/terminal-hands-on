@@ -1,12 +1,13 @@
 ---
 layout: content
+center: true
 transition: view-transition
 toc: ターミナル生活を支えるやつらの紹介
 ---
 
 # ターミナル生活を支えるやつらを紹介するぜ！
 
-<div class="mt-10 space-y-3">
+<div class="mt-6 space-y-3">
   <FindyKeyValue size="1.05rem" labelWidth="13em" label="ターミナル">文字で PC を操作するための画面</FindyKeyValue>
   <FindyKeyValue size="1.05rem" labelWidth="13em" label="ターミナルマルチプレクサ">1 つの画面を分割して複数のターミナルを扱う</FindyKeyValue>
   <FindyKeyValue size="1.05rem" labelWidth="13em" label="シェル">入力したコマンドを解釈して実行する本体</FindyKeyValue>
@@ -27,6 +28,7 @@ transition: view-transition
 
 ---
 layout: content
+center: true
 transition: view-transition
 ---
 
