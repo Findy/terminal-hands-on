@@ -197,7 +197,7 @@ eyebrowNum: 2
 </FindyAnnotatedImage>
 
 <div class="mt-2 text-xs text-center">
-  <a href="https://deepwiki.com/search/_1b649b74-1735-4598-b35f-5bb60d735926?mode=fast" target="_blank">この質問のページを実際に見る ↗</a>
+  <a href="https://deepwiki.com/search/_1b649b74-1735-4598-b35f-5bb60d735926?mode=fast" target="_blank">この質問のページを実際に見る</a>
 </div>
 
 ---
