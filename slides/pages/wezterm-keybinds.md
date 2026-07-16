@@ -216,13 +216,11 @@ eyebrow: wezterm
 拾いたいパターンは正規表現で足せる
 
 ```lua [~/.config/wezterm/wezterm.lua]
--- macOS は Ctrl+Space が IME 切替と
--- 被るので Cmd+Space に割り当て直す
+-- IME 切替と被るので Cmd+Space に変更
 config.keys = {
   { key = " ", mods = "SUPER",
     action = act.QuickSelect },
 }
-
 -- デフォルトのパターンを無効化する
 config.disable_default_quick_select_patterns = true
 config.quick_select_patterns = {
