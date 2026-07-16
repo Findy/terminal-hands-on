@@ -114,6 +114,7 @@ eyebrow: wezterm
 
 ::left::
 
+1. 設定ファイルを作成してdotfilesで管理する
 
 ```bash
 # dotfiles 配下に WezTerm の設定ファイルを置く
@@ -130,6 +131,8 @@ ln -s ~/dotfiles/.config/wezterm/wezterm.lua \
 </FindyRef>
 
 ::right::
+
+2. 公式ドキュメントにある雛形を用意する
 
 ```lua [~/.config/wezterm/wezterm.lua]
 -- wezterm API を組み込む
@@ -151,7 +154,7 @@ ratio: 1/1
 eyebrow: wezterm
 ---
 
-# フォントの設定
+# フォントの設定 <span class="muted">(Optional)</span>
 
 ::left::
 
