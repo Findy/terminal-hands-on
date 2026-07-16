@@ -65,7 +65,7 @@ winget install wez.wezterm
 
 </FindyRef>
 
-<FindyCallout class="mt-3">
+<FindyCallout>
   Linux は Flatpak (<code>flatpak install flathub org.wezfurlong.wezterm</code>) や
   AppImage、Arch の <code>pacman -S wezterm</code> などディストリごとの手段もある
 </FindyCallout>
@@ -77,7 +77,7 @@ eyebrow: wezterm
 
 # Windows は WSL 上で進める
 
-<FindyCallout class="mb-3">
+<FindyCallout>
   このハンズオンのシェル / CLI 操作は <FindyAccentMark>WSL (Ubuntu)</FindyAccentMark> 上で行う。
   Windows の人は WezTerm を WSL につないでおく
 </FindyCallout>
@@ -213,7 +213,7 @@ eyebrow: wezterm
 
 人類皆一度は憧れるスケスケのターミナル
 
-<FindyKeyValueList size="1.02rem" class="mt-4">
+<FindyKeyValueList size="1.02rem">
   <FindyKeyValue label="透過">opacity 0.85 でほどよい透け感</FindyKeyValue>
   <FindyKeyValue label="ぼかし">blur 20 で文字の視認性を確保</FindyKeyValue>
 </FindyKeyValueList>

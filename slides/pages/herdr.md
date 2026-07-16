@@ -16,7 +16,7 @@ eyebrow: herdr
 
 ::left::
 
-<FindyTermCardList class="mt-2">
+<FindyTermCardList>
   <FindyTermCard term="herdr">
     AI エージェント用のターミナルマルチプレクサ
     <template #note>tmux ライクな prefix キー操作・セッション永続化・Rust 製単一バイナリ</template>
@@ -50,18 +50,17 @@ eyebrow: herdr
 
 ::left::
 
-<div class="mt-2 space-y-4 text-[1.05rem]">
-  <div><FindyColorDot color="#3b82f6" /><strong>spaces</strong> — ワークスペース一覧。リポジトリ / worktree ごとに並び、worktree はネストして表示</div>
-  <div><FindyColorDot color="#10b981" /><strong>agents</strong> — 全エージェントの状態一覧。working / blocked / done が色付きで並ぶ</div>
-  <div><FindyColorDot color="#f59e0b" /><strong>フォーカス中のペイン</strong> — 上部にタブが並び、中でエージェントが動く</div>
-</div>
+<FindyLegend>
+  <FindyLegendItem color="#3b82f6" term="spaces">ワークスペース一覧。リポジトリ / worktree ごとに並び、worktree はネストして表示</FindyLegendItem>
+  <FindyLegendItem color="#10b981" term="agents">全エージェントの状態一覧。working / blocked / done が色付きで並ぶ</FindyLegendItem>
+  <FindyLegendItem color="#f59e0b" term="フォーカス中のペイン">上部にタブが並び、中でエージェントが動く</FindyLegendItem>
+</FindyLegend>
 
 ::right::
 
 <FindyAnnotatedImage
   image="/screenshots/herdr-ui.png"
   alt="herdr の画面。左上に spaces、左下に agents、右にフォーカス中のペイン"
-  class="shadow rounded"
 >
   <FindyImageRegion label="spaces" color="#3b82f6" :x="0.4" :y="1.5" :w="19.6" :h="54.5" />
   <FindyImageRegion label="worktree" labelPosition="above-right" color="#8b5cf6" :x="2" :y="22.8" :w="17.6" :h="10.7" />
@@ -113,7 +112,7 @@ herdr --default-config \
 
 </div>
 
-<FindyCallout class="mt-4">
+<FindyCallout>
   初回起動時のセットアップ画面を閉じてしまったら <code>onboarding = true</code> にして
   <code>herdr server stop</code> → <code>herdr</code> で再表示できる。
   通知などはあとから設定画面 (<code>prefix+s</code>) で変更可能
@@ -852,7 +851,7 @@ eyebrow: herdr
 
 config.toml のコメントに挙がっている候補はどれも採用しなかった
 
-<FindyKeyValueList size="1.02rem" class="mt-4">
+<FindyKeyValueList size="1.02rem">
   <FindyKeyValue label="ctrl+b">Emacs の backward-char と被る</FindyKeyValue>
   <FindyKeyValue label="f12">ホームポジションから遠い</FindyKeyValue>
   <FindyKeyValue label="esc">Emacs の Meta (M-) キーと被る</FindyKeyValue>
@@ -868,7 +867,7 @@ WezTerm の Leader を `ctrl+;` にしたので
 prefix = "ctrl+q"
 ```
 
-<FindyCallout variant="warn" class="mt-4">
+<FindyCallout variant="warn">
   <code>ctrl+q</code> はフロー制御 (XON) のキー。
   zsh で <code>stty -ixon</code> を設定済みなら競合しない
 </FindyCallout>
@@ -882,12 +881,12 @@ eyebrow: herdr
 
 キーの「届く範囲」で振り分けた
 
-<FindyKeyValueList size="1.05rem" gap="1rem" class="mt-6">
+<FindyKeyValueList size="1.05rem" gap="1rem">
   <FindyKeyValue label="ctrl+;">従来の端末キーエンコーディングに無いキー。シェルや fzf に届かないので、WezTerm が握っても衝突しにくい</FindyKeyValue>
   <FindyKeyValue label="ctrl+q">端末を選ばず確実に届くキー。herdr の公式設定にも「修飾付き記号は端末依存」と注記があるため、prefix はこちらにした</FindyKeyValue>
 </FindyKeyValueList>
 
-<FindyCallout class="mt-6">
+<FindyCallout>
   kitty keyboard protocol 対応の TUI には <code>ctrl+;</code> も届くが、WezTerm が先取りすれば問題ない
 </FindyCallout>
 
@@ -925,7 +924,7 @@ help = "prefix+?"             # 全キー一覧
 settings = "prefix+s"         # 設定画面
 ```
 
-<FindyCallout class="mt-4">
+<FindyCallout>
   <code>prefix+?</code> で全キーバインドを確認できるので、まず覚えるのはこれだけ
 </FindyCallout>
 
@@ -948,7 +947,7 @@ herdr server reload-config
 これを WezTerm のコマンドパレット
 (`Ctrl+Shift+P`) に登録した
 
-<FindyKeyValueList size="0.95rem" class="mt-4">
+<FindyKeyValueList size="0.95rem">
   <FindyKeyValue label="実行方法">ペインは開かずバックグラウンド</FindyKeyValue>
   <FindyKeyValue label="PATH">ログインシェル経由 (<code>-lic</code>) で確保</FindyKeyValue>
 </FindyKeyValueList>
@@ -1026,7 +1025,7 @@ eyebrow: herdr
 Claude Code に herdr スキルを入れると、
 エージェント自身が `herdr` CLI でペインを操作できる
 
-<FindyKeyValueList size="1.02rem" class="mt-4">
+<FindyKeyValueList size="1.02rem">
   <FindyKeyValue label="発動条件">依頼で Herdr を明示したとき</FindyKeyValue>
   <FindyKeyValue label="前提">Herdr 管理ペイン内 (<code>HERDR_ENV=1</code>)</FindyKeyValue>
 </FindyKeyValueList>
@@ -1037,7 +1036,7 @@ Claude Code に herdr スキルを入れると、
 
 隣のペインにエージェントが生えて、並列に作業が回る
 
-<FindyKeyValueList size="1.02rem" class="mt-2">
+<FindyKeyValueList size="1.02rem">
   <FindyKeyValue label="1. split">隣にペインを作る</FindyKeyValue>
   <FindyKeyValue label="2. run">claude を対話起動してタスクを投入</FindyKeyValue>
   <FindyKeyValue label="3. wait">working → done を待つ</FindyKeyValue>
@@ -1087,7 +1086,7 @@ herdr pane read w1:p2 \
 
 </div>
 
-<FindyCallout class="mt-4">
+<FindyCallout>
   ファイルを編集するタスクは <code>herdr worktree create</code> で
   checkout ごと分離してからペインを開くと、手元の作業と衝突しない
 </FindyCallout>

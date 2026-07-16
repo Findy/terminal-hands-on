@@ -36,7 +36,7 @@ config.key_tables =
   require("keybinds").key_tables
 ```
 
-<FindyCallout class="mt-4">
+<FindyCallout>
   デフォルトを無効にして全部自分で握るなら
   <code>disable_default_key_bindings = true</code>
 </FindyCallout>
@@ -54,7 +54,7 @@ eyebrow: wezterm
 **Leader キー** = ショートカットの起点になるキー
 (Vim の `<Leader>`、tmux の prefix と同じ発想)
 
-<FindyKeyValueList size="1.02rem" class="mt-4">
+<FindyKeyValueList size="1.02rem">
   <FindyKeyValue label="Ctrl+a">デフォルト。Emacs の行頭移動と被る</FindyKeyValue>
   <FindyKeyValue label="Ctrl+q">フロー制御 (XON) と被る</FindyKeyValue>
   <FindyKeyValue label="Ctrl+;">シェルに届かないので衝突しにくい</FindyKeyValue>
@@ -70,7 +70,7 @@ config.leader = {
 }
 ```
 
-<FindyCallout class="mt-4">
+<FindyCallout>
   <code>Ctrl+;</code> は従来の端末エンコーディングに無いキー。
   シェルや fzf に届かないので WezTerm が先取りしても衝突しない
 </FindyCallout>
@@ -87,7 +87,7 @@ eyebrow: wezterm
 
 デフォルト
 
-<FindyKeyValueList size="0.9rem" gap="0.25rem" class="mt-2">
+<FindyKeyValueList size="0.9rem" gap="0.25rem">
   <FindyKeyValue label="Ctrl+Shift+T">新しいタブ</FindyKeyValue>
   <FindyKeyValue label="Ctrl+Tab">次のタブ</FindyKeyValue>
   <FindyKeyValue label="Ctrl+Shift+P">コマンドパレット</FindyKeyValue>
@@ -99,7 +99,7 @@ eyebrow: wezterm
 
 Leader キー (カスタム設定)
 
-<FindyKeyValueList size="0.9rem" gap="0.25rem" class="mt-2">
+<FindyKeyValueList size="0.9rem" gap="0.25rem">
   <FindyKeyValue label="Leader, |">縦に分割</FindyKeyValue>
   <FindyKeyValue label="Leader, -">横に分割</FindyKeyValue>
   <FindyKeyValue label="Leader, hjkl">ペイン移動</FindyKeyValue>
@@ -118,7 +118,7 @@ eyebrow: wezterm
 
 Leader キーに続けて 1 キーでペインを操作できるようにする
 
-<FindyCallout class="mt-4">
+<FindyCallout>
   <code>act</code> は <code>wezterm.action</code> の短縮。
   ファイル冒頭で <code>local act = wezterm.action</code> としておく
 </FindyCallout>

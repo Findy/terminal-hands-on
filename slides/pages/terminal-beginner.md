@@ -8,7 +8,7 @@ toc: ターミナル生活を支えるやつらの紹介
 
 今日はこの 3 つを一つずつ自分好みにしていく
 
-<FindyKeyValueList size="1.05rem" gap="1rem" class="mt-6">
+<FindyKeyValueList size="1.05rem" gap="1rem">
   <FindyKeyValue label="ターミナルエミュレータ">WezTerm</FindyKeyValue>
   <FindyKeyValue label="ターミナルマルチプレクサ">herdr</FindyKeyValue>
   <FindyKeyValue label="シェル">zsh</FindyKeyValue>
@@ -58,7 +58,7 @@ eyebrowNum: 1
 
 ::left::
 
-<FindyTermCardList class="mt-2">
+<FindyTermCardList>
   <FindyTermCard term="dotfile">
     設定ファイルのこと
     <template #note>名前が <code>.</code> で始まることが由来 (例: <code>.bashrc</code>, <code>.zshrc</code>)</template>
@@ -69,7 +69,7 @@ eyebrowNum: 1
   </FindyTermCard>
 </FindyTermCardList>
 
-<p class="mt-4">公開している人も多く、エンジニアの名刺的存在</p>
+公開している人も多く、エンジニアの名刺的存在
 
 ::right::
 
@@ -110,7 +110,7 @@ eyebrowNum: 1
 **XDG Base Directory**:
 設定ファイルなどの置き場所を標準化する仕様
 
-<FindyKeyValueList size="1.05rem" class="mt-5">
+<FindyKeyValueList size="1.05rem">
   <FindyKeyValue label="設定"><code>~/.config</code></FindyKeyValue>
   <FindyKeyValue label="キャッシュ"><code>~/.cache</code></FindyKeyValue>
   <FindyKeyValue label="データ"><code>~/.local/share</code></FindyKeyValue>
@@ -141,7 +141,7 @@ set -gx XDG_STATE_HOME "$HOME/.local/state"
 
 ::
 
-<FindyCallout variant="warn" class="mt-4">
+<FindyCallout variant="warn">
   macOS では未設定だと <code>~/Library/Application Support</code> に設定を置くツールがある (例: lazygit)
 </FindyCallout>
 
@@ -153,7 +153,7 @@ eyebrowNum: 2
 
 # DeepWiki とは
 
-<FindyTermCardList class="mt-6">
+<FindyTermCardList>
   <FindyTermCard term="DeepWiki">
     GitHub リポジトリを AI が解説してくれるサイト
     <template #note>Cognition (Devin の開発元) が提供・パブリックリポジトリは<FindyAccentMark>無料</FindyAccentMark></template>
@@ -180,18 +180,17 @@ eyebrowNum: 2
 
 ::left::
 
-<div class="mt-2 space-y-4 text-[1.05rem]">
-  <div><FindyColorDot color="#3b82f6" /><strong>質問</strong>: 自然言語でリポジトリに問いかける</div>
-  <div><FindyColorDot color="#10b981" /><strong>回答</strong>: 該当ファイル・行番号を引用しながら説明</div>
-  <div><FindyColorDot color="#f59e0b" /><strong>ソース</strong>: 引用元のコードがそのまま並んで表示される</div>
-</div>
+<FindyLegend>
+  <FindyLegendItem color="#3b82f6" term="質問">自然言語でリポジトリに問いかける</FindyLegendItem>
+  <FindyLegendItem color="#10b981" term="回答">該当ファイル・行番号を引用しながら説明</FindyLegendItem>
+  <FindyLegendItem color="#f59e0b" term="ソース">引用元のコードがそのまま並んで表示される</FindyLegendItem>
+</FindyLegend>
 
 ::right::
 
 <FindyAnnotatedImage
   image="/screenshots/deepwiki-yazi-help.png"
   alt="DeepWiki で yazi のヘルプ表示方法を質問した画面。左に質問と引用付きの回答、右に引用元の keymap-default.toml が表示されている"
-  class="shadow rounded"
 >
   <FindyImageRegion label="質問" color="#3b82f6" :x="6" :y="9" :w="34" :h="9" />
   <FindyImageRegion label="回答（引用付き）" color="#10b981" :x="6" :y="19" :w="34" :h="30" />
@@ -216,7 +215,7 @@ eyebrowNum: 3
 - 一度慣れると後から変更するのが辛い
 
 
-<FindyCallout class="mt-4">
+<FindyCallout>
   内側から外側の順に設定するのがオススメ
 </FindyCallout>
 

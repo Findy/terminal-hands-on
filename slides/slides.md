@@ -72,7 +72,7 @@ toc: まとめ
 
 # まとめ
 
-<FindyKeyValueList size="1.05rem" gap="1rem" class="mt-4">
+<FindyKeyValueList size="1.05rem" gap="1rem">
   <FindyKeyValue label="ターミナル">WezTerm は Lua で見た目もキーバインドも自分好みにできる</FindyKeyValue>
   <FindyKeyValue label="シェル">Emacs バインドを覚えると速い。CapsLock を Ctrl にすると更に快適</FindyKeyValue>
   <FindyKeyValue label="キーバインド">内側（シェル）から外側（ターミナル）の順に設定すると衝突しない</FindyKeyValue>
@@ -80,7 +80,7 @@ toc: まとめ
   <FindyKeyValue label="ワークフロー">ghost・portless・worktree を組み合わせると AI との並行開発が現実になる</FindyKeyValue>
 </FindyKeyValueList>
 
-<FindyCallout class="mt-6">
+<FindyCallout>
   設定はすべて <code>~/.config/</code> 以下のファイル。dotfiles として Git 管理すればどの環境でも再現できる
 </FindyCallout>
 
