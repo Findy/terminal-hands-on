@@ -210,7 +210,7 @@ layout: two-cols
 eyebrow: シェルの設定
 ---
 
-# おすすめキーバインド <FindyBadge variant="soft" color="low">初級</FindyBadge>
+# おすすめキーバインド <FindyBadge variant="outline" color="low">初級</FindyBadge>
 
 ::left::
 
@@ -247,7 +247,7 @@ layout: two-cols
 eyebrow: シェルの設定
 ---
 
-# おすすめキーバインド <FindyBadge variant="soft" color="mid">中級</FindyBadge>
+# おすすめキーバインド <FindyBadge variant="outline" color="mid">中級</FindyBadge>
 
 ::left::
 
@@ -281,7 +281,7 @@ layout: content
 eyebrow: シェルの設定
 ---
 
-# おすすめキーバインド <FindyBadge variant="soft" color="high">上級</FindyBadge>
+# おすすめキーバインド <FindyBadge variant="outline" color="high">上級</FindyBadge>
 
 デフォルトでは設定されていないやつ。設定ファイルに追加して使う
 
