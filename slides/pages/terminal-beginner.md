@@ -56,7 +56,7 @@ eyebrowNum: 1
 
 ::left::
 
-<FindyTermCardList class="mt-10">
+<FindyTermCardList class="mt-2">
   <FindyTermCard term="dotfile">
     設定ファイルのこと
     <template #note>名前が <code>.</code> で始まることが由来 (例: <code>.bashrc</code>, <code>.zshrc</code>)</template>
