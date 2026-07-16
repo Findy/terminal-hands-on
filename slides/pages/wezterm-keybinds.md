@@ -54,11 +54,11 @@ eyebrow: wezterm
 **Leader キー** = ショートカットの起点になるキー
 (Vim の `<Leader>`、tmux の prefix と同じ発想)
 
-<div class="mt-4">
-  <FindyKeyValue size="1.02rem" label="Ctrl+a">デフォルト。Emacs の行頭移動と被る</FindyKeyValue>
-  <FindyKeyValue size="1.02rem" label="Ctrl+q">フロー制御 (XON) と被る</FindyKeyValue>
-  <FindyKeyValue size="1.02rem" label="Ctrl+;">シェルに届かないので衝突しにくい</FindyKeyValue>
-</div>
+<FindyKeyValueList size="1.02rem" class="mt-4">
+  <FindyKeyValue label="Ctrl+a">デフォルト。Emacs の行頭移動と被る</FindyKeyValue>
+  <FindyKeyValue label="Ctrl+q">フロー制御 (XON) と被る</FindyKeyValue>
+  <FindyKeyValue label="Ctrl+;">シェルに届かないので衝突しにくい</FindyKeyValue>
+</FindyKeyValueList>
 
 ::right::
 
@@ -87,24 +87,24 @@ eyebrow: wezterm
 
 デフォルト
 
-<div class="mt-2 space-y-1">
-  <FindyKeyValue size="0.9rem" labelWidth="9em" label="Ctrl+Shift+T">新しいタブ</FindyKeyValue>
-  <FindyKeyValue size="0.9rem" labelWidth="9em" label="Ctrl+Tab">次のタブ</FindyKeyValue>
-  <FindyKeyValue size="0.9rem" labelWidth="9em" label="Ctrl+Shift+P">コマンドパレット</FindyKeyValue>
-  <FindyKeyValue size="0.9rem" labelWidth="9em" label="Ctrl+Shift+F">検索</FindyKeyValue>
-  <FindyKeyValue size="0.9rem" labelWidth="9em" label="Ctrl +/-">フォントサイズ変更</FindyKeyValue>
-</div>
+<FindyKeyValueList size="0.9rem" gap="0.25rem" class="mt-2">
+  <FindyKeyValue label="Ctrl+Shift+T">新しいタブ</FindyKeyValue>
+  <FindyKeyValue label="Ctrl+Tab">次のタブ</FindyKeyValue>
+  <FindyKeyValue label="Ctrl+Shift+P">コマンドパレット</FindyKeyValue>
+  <FindyKeyValue label="Ctrl+Shift+F">検索</FindyKeyValue>
+  <FindyKeyValue label="Ctrl +/-">フォントサイズ変更</FindyKeyValue>
+</FindyKeyValueList>
 
 ::right::
 
 Leader キー (カスタム設定)
 
-<div class="mt-2 space-y-1">
-  <FindyKeyValue size="0.9rem" labelWidth="9em" label="Leader, |">縦に分割</FindyKeyValue>
-  <FindyKeyValue size="0.9rem" labelWidth="9em" label="Leader, -">横に分割</FindyKeyValue>
-  <FindyKeyValue size="0.9rem" labelWidth="9em" label="Leader, hjkl">ペイン移動</FindyKeyValue>
-  <FindyKeyValue size="0.9rem" labelWidth="9em" label="Leader, z">ズーム</FindyKeyValue>
-</div>
+<FindyKeyValueList size="0.9rem" gap="0.25rem" class="mt-2">
+  <FindyKeyValue label="Leader, |">縦に分割</FindyKeyValue>
+  <FindyKeyValue label="Leader, -">横に分割</FindyKeyValue>
+  <FindyKeyValue label="Leader, hjkl">ペイン移動</FindyKeyValue>
+  <FindyKeyValue label="Leader, z">ズーム</FindyKeyValue>
+</FindyKeyValueList>
 
 ---
 layout: two-cols

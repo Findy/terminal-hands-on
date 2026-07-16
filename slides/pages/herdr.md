@@ -871,12 +871,12 @@ eyebrow: herdr
 
 config.toml のコメントに挙がっている候補はどれも採用しなかった
 
-<div class="mt-4">
-  <FindyKeyValue size="1.02rem" label="ctrl+b">Emacs の backward-char と被る</FindyKeyValue>
-  <FindyKeyValue size="1.02rem" label="f12">ホームポジションから遠い</FindyKeyValue>
-  <FindyKeyValue size="1.02rem" label="esc">Emacs の Meta (M-) キーと被る</FindyKeyValue>
-  <FindyKeyValue size="1.02rem" label="-"><code>cd -</code> の abbreviation と被る</FindyKeyValue>
-</div>
+<FindyKeyValueList size="1.02rem" class="mt-4">
+  <FindyKeyValue label="ctrl+b">Emacs の backward-char と被る</FindyKeyValue>
+  <FindyKeyValue label="f12">ホームポジションから遠い</FindyKeyValue>
+  <FindyKeyValue label="esc">Emacs の Meta (M-) キーと被る</FindyKeyValue>
+  <FindyKeyValue label="-"><code>cd -</code> の abbreviation と被る</FindyKeyValue>
+</FindyKeyValueList>
 
 ::right::
 
@@ -901,10 +901,10 @@ eyebrow: herdr
 
 キーの「届く範囲」で振り分けた
 
-<div class="mt-6 space-y-4">
-  <FindyKeyValue size="1.05rem" labelWidth="6em" label="ctrl+;">従来の端末キーエンコーディングに無いキー。シェルや fzf に届かないので、WezTerm が握っても衝突しにくい</FindyKeyValue>
-  <FindyKeyValue size="1.05rem" labelWidth="6em" label="ctrl+q">端末を選ばず確実に届くキー。herdr の公式設定にも「修飾付き記号は端末依存」と注記があるため、prefix はこちらにした</FindyKeyValue>
-</div>
+<FindyKeyValueList size="1.05rem" gap="1rem" class="mt-6">
+  <FindyKeyValue label="ctrl+;">従来の端末キーエンコーディングに無いキー。シェルや fzf に届かないので、WezTerm が握っても衝突しにくい</FindyKeyValue>
+  <FindyKeyValue label="ctrl+q">端末を選ばず確実に届くキー。herdr の公式設定にも「修飾付き記号は端末依存」と注記があるため、prefix はこちらにした</FindyKeyValue>
+</FindyKeyValueList>
 
 <FindyCallout class="mt-6">
   kitty keyboard protocol 対応の TUI には <code>ctrl+;</code> も届くが、WezTerm が先取りすれば問題ない
@@ -967,10 +967,10 @@ herdr server reload-config
 これを WezTerm のコマンドパレット
 (`Ctrl+Shift+P`) に登録した
 
-<div class="mt-4">
-  <FindyKeyValue size="0.95rem" label="実行方法">ペインは開かずバックグラウンド</FindyKeyValue>
-  <FindyKeyValue size="0.95rem" label="PATH">ログインシェル経由 (<code>-lic</code>) で確保</FindyKeyValue>
-</div>
+<FindyKeyValueList size="0.95rem" class="mt-4">
+  <FindyKeyValue label="実行方法">ペインは開かずバックグラウンド</FindyKeyValue>
+  <FindyKeyValue label="PATH">ログインシェル経由 (<code>-lic</code>) で確保</FindyKeyValue>
+</FindyKeyValueList>
 
 ::right::
 
@@ -1045,10 +1045,10 @@ eyebrow: herdr
 Claude Code に herdr スキルを入れると、
 エージェント自身が `herdr` CLI でペインを操作できる
 
-<div class="mt-4">
-  <FindyKeyValue size="1.02rem" label="発動条件">依頼で Herdr を明示したとき</FindyKeyValue>
-  <FindyKeyValue size="1.02rem" label="前提">Herdr 管理ペイン内 (<code>HERDR_ENV=1</code>)</FindyKeyValue>
-</div>
+<FindyKeyValueList size="1.02rem" class="mt-4">
+  <FindyKeyValue label="発動条件">依頼で Herdr を明示したとき</FindyKeyValue>
+  <FindyKeyValue label="前提">Herdr 管理ペイン内 (<code>HERDR_ENV=1</code>)</FindyKeyValue>
+</FindyKeyValueList>
 
 例: 「Issue #42 を実装して、herdr でペイン作って進めて」
 
@@ -1056,12 +1056,12 @@ Claude Code に herdr スキルを入れると、
 
 隣のペインにエージェントが生えて、並列に作業が回る
 
-<div class="mt-2">
-  <FindyKeyValue size="1.02rem" label="1. split">隣にペインを作る</FindyKeyValue>
-  <FindyKeyValue size="1.02rem" label="2. run">claude を対話起動してタスクを投入</FindyKeyValue>
-  <FindyKeyValue size="1.02rem" label="3. wait">working → done を待つ</FindyKeyValue>
-  <FindyKeyValue size="1.02rem" label="4. read">結果を読んで回収</FindyKeyValue>
-</div>
+<FindyKeyValueList size="1.02rem" class="mt-2">
+  <FindyKeyValue label="1. split">隣にペインを作る</FindyKeyValue>
+  <FindyKeyValue label="2. run">claude を対話起動してタスクを投入</FindyKeyValue>
+  <FindyKeyValue label="3. wait">working → done を待つ</FindyKeyValue>
+  <FindyKeyValue label="4. read">結果を読んで回収</FindyKeyValue>
+</FindyKeyValueList>
 
 
 ---

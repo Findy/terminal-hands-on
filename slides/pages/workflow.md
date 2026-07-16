@@ -17,12 +17,12 @@ ratio: 1/1
 
 バックグラウンドプロセスの管理ツール
 
-<div class="mt-4 space-y-3">
-  <FindyKeyValue size="0.95rem" label="起動">ghost run -- pnpm dev</FindyKeyValue>
-  <FindyKeyValue size="0.95rem" label="一覧">ghost list</FindyKeyValue>
-  <FindyKeyValue size="0.95rem" label="ログ">ghost log -f &lt;task_id&gt;</FindyKeyValue>
-  <FindyKeyValue size="0.95rem" label="停止">ghost stop &lt;task_id&gt;</FindyKeyValue>
-</div>
+<FindyKeyValueList size="0.95rem" gap="0.75rem" class="mt-4">
+  <FindyKeyValue label="起動">ghost run -- pnpm dev</FindyKeyValue>
+  <FindyKeyValue label="一覧">ghost list</FindyKeyValue>
+  <FindyKeyValue label="ログ">ghost log -f &lt;task_id&gt;</FindyKeyValue>
+  <FindyKeyValue label="停止">ghost stop &lt;task_id&gt;</FindyKeyValue>
+</FindyKeyValueList>
 
 <FindyCallout class="mt-4">
   <code>&</code> や <code>nohup</code> と違い、起動・ログ確認・停止がコマンド 1 つで完結する。だから AI エージェントにも任せやすい
@@ -63,11 +63,11 @@ ratio: 1/1
 
 dev サーバーに <FindyAccentMark>安定した URL</FindyAccentMark> を自動割り当てするプロキシ
 
-<div class="mt-4 space-y-3">
-  <FindyKeyValue size="0.95rem" label="起動">portless myapp pnpm dev</FindyKeyValue>
-  <FindyKeyValue size="0.95rem" label="URL">https://myapp.localhost</FindyKeyValue>
-  <FindyKeyValue size="0.95rem" label="一覧">portless list</FindyKeyValue>
-</div>
+<FindyKeyValueList size="0.95rem" gap="0.75rem" class="mt-4">
+  <FindyKeyValue label="起動">portless myapp pnpm dev</FindyKeyValue>
+  <FindyKeyValue label="URL">https://myapp.localhost</FindyKeyValue>
+  <FindyKeyValue label="一覧">portless list</FindyKeyValue>
+</FindyKeyValueList>
 
 ポート番号を覚えなくていい。worktree ごとに URL が分かれ、並行開発でも衝突しない
 
@@ -116,14 +116,14 @@ layout: content
 
 # 各ツールの役割分担
 
-<div class="mt-2">
-  <FindyKeyValue size="0.82rem" labelWidth="9em" label="worktree">編集タスクをブランチごとの作業ディレクトリに分離。未コミット変更の混入や index.lock の競合を防ぐ（<a href="https://github.com/mozumasu/dotfiles/blob/main/.config/claude/rules/parallel-work.md" target="_blank" class="whitespace-nowrap">parallel-work.md</a>）</FindyKeyValue>
-  <FindyKeyValue size="0.82rem" labelWidth="9em" label="サブエージェント">読み取り専用の並列調査 (コードリーディングや grep)。worktree を分けるコストを払わない（<a href="https://github.com/mozumasu/dotfiles/blob/main/.config/claude/rules/parallel-work.md" target="_blank" class="whitespace-nowrap">parallel-work.md</a>）</FindyKeyValue>
-  <FindyKeyValue size="0.82rem" labelWidth="9em" label="ghost">dev サーバーなどのバックグラウンドプロセスを起動・ログ確認・停止できる管理ツール（<a href="https://github.com/mozumasu/dotfiles/blob/main/.config/claude/rules/background-process.md" target="_blank" class="whitespace-nowrap">background-process.md</a>）</FindyKeyValue>
-  <FindyKeyValue size="0.82rem" labelWidth="9em" label="portless">worktree ごとに <code>https://&lt;worktree&gt;.&lt;project&gt;.localhost</code> を自動割り当て。ポート番号の管理が不要になる（<a href="https://github.com/mozumasu/dotfiles/blob/main/.config/claude/rules/background-process.md" target="_blank" class="whitespace-nowrap">background-process.md</a>）</FindyKeyValue>
-  <FindyKeyValue size="0.82rem" labelWidth="9em" label="スキル">PR 作成後は pr-slide-screenshots が変更スライドを dev サーバーから撮影し、PR コメントに添付（<a href="https://github.com/mozumasu/dotfiles/blob/main/.config/claude/skills/pr-slide-screenshots/SKILL.md" target="_blank" class="whitespace-nowrap">SKILL.md</a>）</FindyKeyValue>
-  <FindyKeyValue size="0.82rem" labelWidth="9em" label="Raycast">Script Command で Claude の git push 許可をトグル。hooks が状態ファイルを見て push をブロック / 許可する（<a href="https://github.com/mozumasu/dotfiles/blob/main/.config/claude/scripts/claude-git-push-ctl.sh" target="_blank" class="whitespace-nowrap">claude-git-push-ctl.sh</a>）</FindyKeyValue>
-</div>
+<FindyKeyValueList size="0.82rem" class="mt-2">
+  <FindyKeyValue label="worktree">編集タスクをブランチごとの作業ディレクトリに分離。未コミット変更の混入や index.lock の競合を防ぐ（<a href="https://github.com/mozumasu/dotfiles/blob/main/.config/claude/rules/parallel-work.md" target="_blank" class="whitespace-nowrap">parallel-work.md</a>）</FindyKeyValue>
+  <FindyKeyValue label="サブエージェント">読み取り専用の並列調査 (コードリーディングや grep)。worktree を分けるコストを払わない（<a href="https://github.com/mozumasu/dotfiles/blob/main/.config/claude/rules/parallel-work.md" target="_blank" class="whitespace-nowrap">parallel-work.md</a>）</FindyKeyValue>
+  <FindyKeyValue label="ghost">dev サーバーなどのバックグラウンドプロセスを起動・ログ確認・停止できる管理ツール（<a href="https://github.com/mozumasu/dotfiles/blob/main/.config/claude/rules/background-process.md" target="_blank" class="whitespace-nowrap">background-process.md</a>）</FindyKeyValue>
+  <FindyKeyValue label="portless">worktree ごとに <code>https://&lt;worktree&gt;.&lt;project&gt;.localhost</code> を自動割り当て。ポート番号の管理が不要になる（<a href="https://github.com/mozumasu/dotfiles/blob/main/.config/claude/rules/background-process.md" target="_blank" class="whitespace-nowrap">background-process.md</a>）</FindyKeyValue>
+  <FindyKeyValue label="スキル">PR 作成後は pr-slide-screenshots が変更スライドを dev サーバーから撮影し、PR コメントに添付（<a href="https://github.com/mozumasu/dotfiles/blob/main/.config/claude/skills/pr-slide-screenshots/SKILL.md" target="_blank" class="whitespace-nowrap">SKILL.md</a>）</FindyKeyValue>
+  <FindyKeyValue label="Raycast">Script Command で Claude の git push 許可をトグル。hooks が状態ファイルを見て push をブロック / 許可する（<a href="https://github.com/mozumasu/dotfiles/blob/main/.config/claude/scripts/claude-git-push-ctl.sh" target="_blank" class="whitespace-nowrap">claude-git-push-ctl.sh</a>）</FindyKeyValue>
+</FindyKeyValueList>
 
 <FindyCallout class="mt-4">
   並列作業は 3 層で使い分ける。進捗を見たい作業は herdr ペイン + worktree、

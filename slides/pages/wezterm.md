@@ -213,10 +213,10 @@ eyebrow: wezterm
 
 人類皆一度は憧れるスケスケのターミナル
 
-<div class="mt-4">
-  <FindyKeyValue size="1.02rem" label="透過">opacity 0.85 でほどよい透け感</FindyKeyValue>
-  <FindyKeyValue size="1.02rem" label="ぼかし">blur 20 で文字の視認性を確保</FindyKeyValue>
-</div>
+<FindyKeyValueList size="1.02rem" class="mt-4">
+  <FindyKeyValue label="透過">opacity 0.85 でほどよい透け感</FindyKeyValue>
+  <FindyKeyValue label="ぼかし">blur 20 で文字の視認性を確保</FindyKeyValue>
+</FindyKeyValueList>
 
 <p class="takeaway mt-8">2 行で<FindyAccentMark>気分がブチ上がる</FindyAccentMark></p>
 

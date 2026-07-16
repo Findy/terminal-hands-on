@@ -1,17 +1,18 @@
 ---
 layout: content
-center: true
 transition: view-transition
 toc: ターミナル生活を支えるやつらの紹介
 ---
 
 # ターミナル生活を支えるやつらを紹介するぜ！
 
-<div class="mt-6 space-y-3">
-  <FindyKeyValue size="1.05rem" labelWidth="13em" label="ターミナル">文字で PC を操作するための画面</FindyKeyValue>
-  <FindyKeyValue size="1.05rem" labelWidth="13em" label="ターミナルマルチプレクサ">1 つの画面を分割して複数のターミナルを扱う</FindyKeyValue>
-  <FindyKeyValue size="1.05rem" labelWidth="13em" label="シェル">入力したコマンドを解釈して実行する本体</FindyKeyValue>
-</div>
+キーボードとアプリのあいだにある 3 層を、外側から順に自分好みにしていく
+
+<FindyFlow
+  from="外側 (見た目と入力)"
+  to="内側 (コマンドの実行)"
+  steps="ターミナルエミュレータ\nWezTerm,ターミナルマルチプレクサ\nherdr,シェル\nzsh"
+/>
 
 ---
 layout: section
@@ -53,7 +54,7 @@ eyebrow: dotfiles
 eyebrowNum: 1
 ---
 
-# 1. dotfiles {.inline-block.view-transition-dotfiles}
+# dotfiles とは {.inline-block.view-transition-dotfiles}
 
 ::left::
 
@@ -109,12 +110,12 @@ eyebrowNum: 1
 **XDG Base Directory**:
 設定ファイルなどの置き場所を標準化する仕様
 
-<div class="mt-5">
-  <FindyKeyValue size="1.05rem" label="設定"><code>~/.config</code></FindyKeyValue>
-  <FindyKeyValue size="1.05rem" label="キャッシュ"><code>~/.cache</code></FindyKeyValue>
-  <FindyKeyValue size="1.05rem" label="データ"><code>~/.local/share</code></FindyKeyValue>
-  <FindyKeyValue size="1.05rem" label="状態"><code>~/.local/state</code> (ログ・履歴など)</FindyKeyValue>
-</div>
+<FindyKeyValueList size="1.05rem" class="mt-5">
+  <FindyKeyValue label="設定"><code>~/.config</code></FindyKeyValue>
+  <FindyKeyValue label="キャッシュ"><code>~/.cache</code></FindyKeyValue>
+  <FindyKeyValue label="データ"><code>~/.local/share</code></FindyKeyValue>
+  <FindyKeyValue label="状態"><code>~/.local/state</code> (ログ・履歴など)</FindyKeyValue>
+</FindyKeyValueList>
 
 ::right::
 
@@ -150,7 +151,7 @@ eyebrow: DeepWiki
 eyebrowNum: 2
 ---
 
-# 2. DeepWiki
+# DeepWiki とは
 
 <FindyTermCardList class="mt-6">
   <FindyTermCard term="DeepWiki">
@@ -207,7 +208,7 @@ eyebrow: キーバインド
 eyebrowNum: 3
 ---
 
-# 3. キーバインド
+# キーバインドをどう決めるか
 
 ::left::
 
