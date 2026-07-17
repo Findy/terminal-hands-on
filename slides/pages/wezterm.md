@@ -89,7 +89,21 @@ eyebrow: wezterm
 
 ```powershell [1. WSL を入れる (管理者 PowerShell)]
 wsl --install
-# デフォルトで Ubuntu が入る。再起動後、
+
+# Ubuntu 22.04 をインストール
+wsl --install -d Ubuntu-24.04
+
+# インストール済みディストリビューションの確認
+wsl --list --verbose
+
+# WSL2をデフォルトに設定
+wsl --set-default-version 2
+
+# 特定のディストリビューションをWSL2に変換
+wsl --set-version Ubuntu 2
+
+# 再起動 (必要があれば)
+Restart-Computer
 # 初回起動時に Linux のユーザー名とパスワードを設定する
 ```
 
@@ -125,6 +139,7 @@ mkdir -p ~/dotfiles/.config/wezterm
 touch ~/dotfiles/.config/wezterm/wezterm.lua
 
 # シンボリックリンクを貼る
+mkdir -p ~/.config/wezterm
 ln -s ~/dotfiles/.config/wezterm/wezterm.lua \
   ~/.config/wezterm/wezterm.lua
 ```
