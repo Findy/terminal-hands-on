@@ -63,8 +63,21 @@ config.keys = {
     action = act.ActivatePaneDirection("Right") },
   { key = "z", mods = "LEADER",
     action = act.TogglePaneZoomState },
+
+  -- ワークスペース: 新規作成 (名前は自動)
+  { key = "n", mods = "LEADER",
+    action = act.SwitchToWorkspace },
+  -- ワークスペース: 一覧からあいまい検索で選択
+  { key = "w", mods = "LEADER",
+    action = act.ShowLauncherArgs({
+      flags = "FUZZY|WORKSPACES",
+    }) },
+
   { key = "Enter", mods = "SHIFT",
     action = act.SendString("\n") },
 }
+
+-- workspace のトグル切替 (Leader+s で scratch と行き来)
+require("workspace").apply_to_config(config)
 
 return config
