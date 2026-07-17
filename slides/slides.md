@@ -7,6 +7,12 @@ info: |
 class: text-left
 comark: true
 favicon: https://github.com/mozumasu.png
+seoMeta:
+  ogTitle: 学生向けハンズオン～イケてるターミナルをつくろう！～
+  ogDescription: Findy Student 2026.7.17 学生向けハンズオン
+  ogUrl: https://terminal-hands-on.mozumasu.workers.dev/
+  ogImage: https://terminal-hands-on.mozumasu.workers.dev/og-image.png
+  twitterCard: summary_large_image
 addons:
   - slidev-addon-findy
 layout: talk-cover
