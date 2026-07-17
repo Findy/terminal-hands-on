@@ -190,6 +190,55 @@ ls -l ~/.config/wezterm
 </FindyCallout>
 
 ---
+layout: two-cols
+ratio: 1/1
+eyebrow: dotfiles
+eyebrowNum: 1
+---
+
+# コラム: Nix でシンボリックリンクを管理
+
+::left::
+
+ツールが増えるたびに `ln -s` を手で貼るのは大変。<FindyAccentMark>home-manager</FindyAccentMark> (Nix) なら「どこに何をリンクするか」を宣言的に書ける
+
+<FindyKeyValueList size="0.95rem">
+  <FindyKeyValue label="一覧性">リンク定義が 1 ファイルに集まる</FindyKeyValue>
+  <FindyKeyValue label="再現性">新しいマシンでも switch 一発で全リンク再現</FindyKeyValue>
+  <FindyKeyValue label="即反映">mkOutOfStoreSymlink なら実体は dotfiles のまま。編集がすぐ効く</FindyKeyValue>
+</FindyKeyValueList>
+
+<FindyRef>
+
+[home-manager](https://nix-community.github.io/home-manager/) / [mozumasu/dotfiles の実際の設定](https://github.com/mozumasu/dotfiles/blob/main/.config/nix/home-manager/dotfiles.nix)
+
+</FindyRef>
+
+::right::
+
+<div class="code-compact" style="--findy-code-compact-size: 0.75rem">
+
+```nix [dotfiles.nix (実際の設定を抜粋)]
+let
+  dotfiles = "${config.home.homeDirectory}/dotfiles";
+  mkLink = path:
+    config.lib.file.mkOutOfStoreSymlink
+      "${dotfiles}/${path}";
+in
+{
+  # ~/.config/ 配下へのリンクを宣言する
+  xdg.configFile = {
+    "wezterm".source = mkLink ".config/wezterm";
+    "nvim".source = mkLink ".config/nvim";
+    "herdr/config.toml".source =
+      mkLink ".config/herdr/config.toml";
+  };
+}
+```
+
+</div>
+
+---
 layout: content
 eyebrow: DeepWiki
 eyebrowNum: 2
