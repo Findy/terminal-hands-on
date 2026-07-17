@@ -184,11 +184,17 @@ config.font = wezterm.font("JetBrains Mono") -- [!code ++]
 config.font_size = 14.0 -- [!code ++]
 ```
 
-手元のフォントから選ぶなら、設定に貼れる形式で一覧を出せる
+手元のフォント名を一覧するならこれ
+
+<div class="code-compact">
 
 ```sh
-wezterm ls-fonts --list-system
+wezterm ls-fonts --list-system \
+  | grep 'wezterm.font' | cut -d'"' -f2 \
+  | sort -u | grep -v '^\.'
 ```
+
+</div>
 
 ---
 layout: two-cols
