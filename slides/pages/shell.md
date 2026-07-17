@@ -122,84 +122,6 @@ man bind
 ::
 
 ---
-layout: two-cols
-ratio: 2/1
-eyebrow: シェルの設定
----
-
-# シェルのキーバインドは Emacs 由来
-
-::left::
-
-zsh / bash のデフォルトキーバインドは **Emacs モード**
-
-例: `Ctrl+A` で行頭、`Ctrl+E` で行末
-
-vi モード (`bindkey -v`) もあるが、あえて使わない理由:
-
-<FindyKeyValueList size="0.95rem">
-  <FindyKeyValue label="モード切替">Normal / Insert の切替が地味にストレス</FindyKeyValue>
-  <FindyKeyValue label="表示">今どちらのモードか視覚フィードバックが弱い</FindyKeyValue>
-  <FindyKeyValue label="互換性">ssh 先・Docker 内など設定が効かない場面で混乱する</FindyKeyValue>
-</FindyKeyValueList>
-
-::right::
-
-<FindyCallout>
-  複雑な編集だけ <code>$EDITOR</code> で開ける <code>edit-command-line</code> が便利。
-  普段は Emacs バインド、ガッツリ編集したいときだけ Vim
-</FindyCallout>
-
----
-layout: content
-eyebrow: シェルの設定
----
-
-# Windows で Ctrl キーを快適に使う
-
-Windows キーボードの `Ctrl` は小指の端にあって押しづらい。<FindyAccentMark>CapsLock を Ctrl にリマップ</FindyAccentMark>するとかなり楽になる
-
-<FindyKeyValueList size="0.95rem">
-  <FindyKeyValue label="PowerToys">Microsoft 公式。Keyboard Manager で GUI 設定</FindyKeyValue>
-  <FindyKeyValue label="Ctrl2Cap">Sysinternals 製。インストールして再起動するだけ</FindyKeyValue>
-  <FindyKeyValue label="レジストリ">Scancode Map を直接書き換え。ツール不要だが手順がやや複雑</FindyKeyValue>
-</FindyKeyValueList>
-
-<FindyCallout variant="info">
-  Mac は「システム設定 → キーボード → 修飾キー」で CapsLock → Control に変更できる
-</FindyCallout>
-
-<FindyRef label="参照">
-
-[PowerToys Keyboard Manager](https://learn.microsoft.com/ja-jp/windows/powertoys/keyboard-manager) / [Ctrl2Cap](https://learn.microsoft.com/ja-jp/sysinternals/downloads/ctrl2cap)
-
-</FindyRef>
-
----
-layout: content
-eyebrow: シェルの設定
----
-
-# ターミナルのコピー & ペースト
-
-Mac は `Cmd` (GUI) と `Ctrl` (ターミナル) で物理的にキーが分かれている
-
-Windows は両方 `Ctrl` なので、ターミナルでは <FindyAccentMark>Shift を足して区別</FindyAccentMark>する
-
-<FindyKeyValueList size="1rem">
-  <FindyKeyValue label="Ctrl+Shift+C">コピー（ターミナル内）</FindyKeyValue>
-  <FindyKeyValue label="Ctrl+Shift+V">ペースト（ターミナル内）</FindyKeyValue>
-  <FindyKeyValue label="Ctrl+C">プロセス中断 (SIGINT)</FindyKeyValue>
-  <FindyKeyValue label="Ctrl+V">リテラル入力モード</FindyKeyValue>
-</FindyKeyValueList>
-
-<FindyRef label="参照">
-
-[WezTerm Default Key Assignments](https://wezterm.org/config/default-keys.html)
-
-</FindyRef>
-
----
 layout: section
 color: gray
 ---
@@ -321,3 +243,82 @@ bindkey '^n' history-beginning-search-forward-end
 ```
 
 ::
+
+---
+layout: two-cols
+ratio: 2/1
+eyebrow: シェルの設定
+---
+
+# シェルのキーバインドは Emacs 由来
+
+::left::
+
+zsh / bash のデフォルトキーバインドは **Emacs モード**
+
+例: `Ctrl+A` で行頭、`Ctrl+E` で行末
+
+vi モード (`bindkey -v`) もあるが、あえて使わない理由:
+
+<FindyKeyValueList size="0.95rem">
+  <FindyKeyValue label="モード切替">Normal / Insert の切替が地味にストレス</FindyKeyValue>
+  <FindyKeyValue label="表示">今どちらのモードか視覚フィードバックが弱い</FindyKeyValue>
+  <FindyKeyValue label="互換性">ssh 先・Docker 内など設定が効かない場面で混乱する</FindyKeyValue>
+</FindyKeyValueList>
+
+::right::
+
+<FindyCallout>
+  複雑な編集だけ <code>$EDITOR</code> で開ける <code>edit-command-line</code> が便利。
+  普段は Emacs バインド、ガッツリ編集したいときだけ Vim
+</FindyCallout>
+
+---
+layout: content
+eyebrow: シェルの設定 | Windows
+---
+
+# Windows で Ctrl キーを快適に使う
+
+Windows キーボードの `Ctrl` は小指の端にあって押しづらい。<FindyAccentMark>CapsLock を Ctrl にリマップ</FindyAccentMark>するとかなり楽になる
+
+<FindyKeyValueList size="0.95rem">
+  <FindyKeyValue label="PowerToys">Microsoft 公式。Keyboard Manager で GUI 設定</FindyKeyValue>
+  <FindyKeyValue label="Ctrl2Cap">Sysinternals 製。インストールして再起動するだけ</FindyKeyValue>
+  <FindyKeyValue label="レジストリ">Scancode Map を直接書き換え。ツール不要だが手順がやや複雑</FindyKeyValue>
+</FindyKeyValueList>
+
+<FindyCallout variant="info">
+  Mac は「システム設定 → キーボード → 修飾キー」で CapsLock → Control に変更できる
+</FindyCallout>
+
+<FindyRef label="参照">
+
+[PowerToys Keyboard Manager](https://learn.microsoft.com/ja-jp/windows/powertoys/keyboard-manager) / [Ctrl2Cap](https://learn.microsoft.com/ja-jp/sysinternals/downloads/ctrl2cap)
+
+</FindyRef>
+
+---
+layout: content
+eyebrow: シェルの設定 | Windows
+---
+
+# ターミナルのコピー & ペースト
+
+Mac は `Cmd` (GUI) と `Ctrl` (ターミナル) で物理的にキーが分かれている
+
+Windows は両方 `Ctrl` なので、ターミナルでは <FindyAccentMark>Shift を足して区別</FindyAccentMark>する
+
+<FindyKeyValueList size="1rem">
+  <FindyKeyValue label="Ctrl+Shift+C">コピー（ターミナル内）</FindyKeyValue>
+  <FindyKeyValue label="Ctrl+Shift+V">ペースト（ターミナル内）</FindyKeyValue>
+  <FindyKeyValue label="Ctrl+C">プロセス中断 (SIGINT)</FindyKeyValue>
+  <FindyKeyValue label="Ctrl+V">リテラル入力モード</FindyKeyValue>
+</FindyKeyValueList>
+
+<FindyRef label="参照">
+
+[WezTerm Default Key Assignments](https://wezterm.org/config/default-keys.html)
+
+</FindyRef>
+

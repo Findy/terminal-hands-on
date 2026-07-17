@@ -431,6 +431,13 @@ end)
 </div>
 
 ---
+layout: section
+color: gray
+---
+
+# Ghosttyの紹介
+
+---
 eyebrow: コラム
 layout: web-half
 url: https://ghostty.org/
