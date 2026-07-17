@@ -146,6 +146,50 @@ set -gx XDG_STATE_HOME "$HOME/.local/state"
 </FindyCallout>
 
 ---
+layout: two-cols
+ratio: 1/1
+eyebrow: dotfiles
+eyebrowNum: 1
+---
+
+# 実体は dotfiles、参照はシンボリックリンク
+
+::left::
+
+設定ファイルの実体は dotfiles リポジトリに置き、アプリが読む場所には<FindyAccentMark>シンボリックリンク</FindyAccentMark> (実体を指す参照) を貼る
+
+<FindyKeyValueList size="0.95rem">
+  <FindyKeyValue label="実体"><code>~/dotfiles/.config/…</code> 編集・Git 管理</FindyKeyValue>
+  <FindyKeyValue label="リンク"><code>~/.config/…</code> アプリが読む場所</FindyKeyValue>
+</FindyKeyValueList>
+
+<FindyCallout>
+  コピーだと編集のたびに dotfiles へ書き戻すことになる。リンクなら実体は 1 つだけ
+</FindyCallout>
+
+::right::
+
+引数の順番は「実体 → リンク」
+
+<div class="code-compact" style="--findy-code-compact-size: 0.75rem">
+
+```sh
+# ln -s <実体> <リンク>
+ln -s ~/dotfiles/.config/wezterm/wezterm.lua \
+  ~/.config/wezterm/wezterm.lua
+
+# 確認: リンクは -> で実体を指す
+ls -l ~/.config/wezterm
+# wezterm.lua -> ~/dotfiles/.config/...
+```
+
+</div>
+
+<FindyCallout>
+  GNU Stow や chezmoi でリンク貼りを自動化する人も多い。今日は <code>ln -s</code> を手で貼っていく
+</FindyCallout>
+
+---
 layout: content
 eyebrow: DeepWiki
 eyebrowNum: 2
