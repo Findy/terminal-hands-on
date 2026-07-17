@@ -26,6 +26,25 @@ role: Findy Inc. / SRE
 # イケてるターミナルをつくろう！
 
 ---
+layout: content
+---
+
+# このスライドの使い方
+
+手元のブラウザで <https://terminal-hands-on.mozumasu.workers.dev/> を開くと、同じスライドを自分のペースで見られます。 {.content-lead}
+
+<FindyKeyValueList size="1.05rem" gap="1rem">
+  <FindyKeyValue label="← →">前後のスライドへ移動（Space でも進める）</FindyKeyValue>
+  <FindyKeyValue label="o">全スライドの一覧を開く。クリックでそのページへジャンプ</FindyKeyValue>
+  <FindyKeyValue label="g">ページ番号を入力してジャンプ</FindyKeyValue>
+  <FindyKeyValue label="f">フルスクリーン表示</FindyKeyValue>
+</FindyKeyValueList>
+
+<FindyCallout>
+  このあとの目次スライドも、項目をクリックするとそのページへジャンプできる
+</FindyCallout>
+
+---
 layout: profile
 image: https://github.com/mozumasu.png
 name: mozumasu
