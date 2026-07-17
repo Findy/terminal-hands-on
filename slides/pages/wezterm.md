@@ -325,17 +325,15 @@ eyebrow: wezterm
 
 WezTerm が読むのは `wezterm.lua` だけ。役割ごとのファイルはそこから `require` で読み込む
 
-<div class="code-compact">
-
-```text [ファイル構成]
+<FindyCallout label="ファイル構成">
+<pre style="margin: 0; padding: 0; background: none; font-size: 0.85rem; line-height: 1.8">
 ~/.config/wezterm/
 ├── wezterm.lua    # エントリ (これだけが読まれる)
 ├── keymaps.lua    # キーバインド
 ├── appearance.lua # 見た目
 └── tab.lua        # タブバー
-```
-
-</div>
+</pre>
+</FindyCallout>
 
 <FindyRef>
 
