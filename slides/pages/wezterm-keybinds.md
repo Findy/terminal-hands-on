@@ -247,3 +247,102 @@ config.keys = {
   },
 }
 ```
+
+---
+layout: two-cols
+ratio: 1/1
+eyebrow: wezterm
+---
+
+# Workspace でプロジェクトを切り替える
+
+::left::
+
+**Workspace** = タブ・ペインをまとめる作業単位 (tmux のセッションに相当)
+
+<FindyKeyValueList size="0.95rem" gap="0.25rem">
+  <FindyKeyValue label="切替">SwitchToWorkspace。無ければ新規作成される</FindyKeyValue>
+  <FindyKeyValue label="一覧">ランチャーの WORKSPACES フラグであいまい検索</FindyKeyValue>
+  <FindyKeyValue label="spawn">cwd を指定すればプロジェクトに直行できる</FindyKeyValue>
+</FindyKeyValueList>
+
+<FindyRef>
+
+[Workspaces](https://wezterm.org/recipes/workspaces.html) / [SwitchToWorkspace](https://wezterm.org/config/lua/keyassignment/SwitchToWorkspace.html)
+
+</FindyRef>
+
+::right::
+
+<div class="code-compact">
+
+```lua [~/.config/wezterm/wezterm.lua]
+config.keys = {
+  -- 一覧からあいまい検索で切替
+  { key = "w", mods = "LEADER",
+    action = act.ShowLauncherArgs({
+      flags = "FUZZY|WORKSPACES",
+    }) },
+  -- 名前と cwd を指定して直行
+  { key = "a", mods = "CTRL|CMD",
+    action = act.SwitchToWorkspace({
+      name = "nb",
+      spawn = { cwd = wezterm.home_dir .. "/src/nb" },
+    }) },
+}
+```
+
+</div>
+
+---
+layout: two-cols
+ratio: 1/1
+eyebrow: wezterm
+---
+
+# 同じキーで行って帰る: トグル切替
+
+::left::
+
+切替前の workspace 名を覚えておくと、<FindyAccentMark>同じキーで行きと帰り</FindyAccentMark>を往復できる（2 度目の押下で元いた場所へ戻る）
+
+<div class="code-compact">
+
+```lua
+{ key = "s", mods = "CTRL|CMD",
+  action = toggle_workspace("scratch") },
+{ key = "a", mods = "CTRL|CMD",
+  action = toggle_workspace("nb",
+    { cwd = wezterm.home_dir .. "/src/nb" }) },
+```
+
+</div>
+
+<FindyCallout>
+  マルチプレクサ (herdr など) 側の切替キーと被らないキーを選ぶ
+</FindyCallout>
+
+::right::
+
+<div class="code-compact" style="--findy-code-compact-size: 0.75rem">
+
+```lua [~/.config/wezterm/workspace.lua]
+-- 切替前にいた workspace 名を覚えておく
+local previous = {}
+
+local function toggle_workspace(name, spawn)
+  return wezterm.action_callback(function(window, pane)
+    local current = wezterm.mux.get_active_workspace()
+    if current == name then
+      window:perform_action(act.SwitchToWorkspace({
+        name = previous[name] or "default" }), pane)
+    else
+      previous[name] = current
+      window:perform_action(act.SwitchToWorkspace({
+        name = name, spawn = spawn }), pane)
+    end
+  end)
+end
+```
+
+</div>
