@@ -34,8 +34,7 @@ wezterm show-keys --lua > keybinds.lua
 ```lua [~/.config/wezterm/wezterm.lua]
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
-config.keys = require("keybinds").keys -- [!code ++]
-config.key_tables = require("keybinds").key_tables -- [!code ++]
+require("keybinds").apply_to_config(config) -- [!code ++]
 return config
 ```
 
