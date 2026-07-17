@@ -122,6 +122,22 @@ man bind
 ::
 
 ---
+layout: content
+eyebrow: シェルの設定
+---
+
+zshが入っていない場合はインストールする
+
+::code
+
+```sh
+which zsh
+sudo apt install -y zsh
+```
+
+::
+
+---
 layout: section
 color: gray
 ---
