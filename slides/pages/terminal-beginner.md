@@ -14,6 +14,7 @@ toc: ターミナル生活を支えるやつらの紹介
   <FindyKeyValue label="シェル">zsh</FindyKeyValue>
 </FindyKeyValueList>
 
+ハンズオンのリポジトリ
 https://github.com/Findy/terminal-hands-on
 
 ---

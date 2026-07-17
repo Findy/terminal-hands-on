@@ -126,16 +126,13 @@ layout: content
 eyebrow: シェルの設定
 ---
 
-zshが入っていない場合はインストールする
-
-::code
+# zshが入っていない場合はインストール
 
 ```sh
 which zsh
 sudo apt install -y zsh
 ```
 
-::
 
 ---
 layout: section
