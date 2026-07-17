@@ -1068,6 +1068,49 @@ ratio: 1/1
 eyebrow: herdr
 ---
 
+# cmd キーを herdr で使う
+
+::left::
+
+`cmd+t` のような cmd 修飾は従来の端末エンコーディングに存在せず、そのままでは TUI に届かない
+
+WezTerm 側で 2 つの前提を満たす
+
+<FindyKeyValueList size="1.02rem">
+  <FindyKeyValue label="kitty protocol を許可"><code>enable_kitty_keyboard = true</code>。herdr が起動時に要求し、cmd (SUPER) 修飾付きでキーが届くようになる</FindyKeyValue>
+  <FindyKeyValue label="WezTerm に食わせない"><code>cmd+t</code> は WezTerm の SpawnTab が先に消費する。使うキーだけ <code>DisableDefaultAssignment</code> で解除する</FindyKeyValue>
+</FindyKeyValueList>
+
+::right::
+
+```lua [.config/wezterm/wezterm.lua]
+config.enable_kitty_keyboard = true
+
+-- 個別に解除する場合。mozumasu は
+-- disable_default_key_bindings = true で全解除
+config.keys = {
+  { key = "t", mods = "SUPER",
+    action = wezterm.action.DisableDefaultAssignment },
+}
+```
+
+```toml [.config/herdr/config.toml]
+new_tab = "cmd+t"
+switch_tab = "cmd+1..9"
+previous_agent = "cmd+ctrl+p"
+next_agent = "cmd+ctrl+n"
+```
+
+<FindyCallout variant="warn">
+  古い WezTerm には cmd が kitty エンコードされないバグがあった。効かないときはまず <code>wezterm --version</code> を確認 (20240203 以降なら修正済み)
+</FindyCallout>
+
+---
+layout: two-cols
+ratio: 1/1
+eyebrow: herdr
+---
+
 # よく使う herdr キーバインド
 
 ::left::
