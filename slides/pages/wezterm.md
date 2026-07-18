@@ -85,12 +85,14 @@ eyebrow: wezterm
   Windows の人は WezTerm を WSL につないでおく
 </FindyCallout>
 
+<div class="code-scroll" style="--findy-code-scroll-h: 13.5rem">
+
 ::code-group
 
 ```powershell [1. WSL を入れる (管理者 PowerShell)]
 wsl --install
 
-# Ubuntu 22.04 をインストール
+# Ubuntu 24.04 をインストール
 wsl --install -d Ubuntu-24.04
 
 # インストール済みディストリビューションの確認
@@ -114,6 +116,8 @@ config.default_domain = "WSL:Ubuntu"
 ```
 
 ::
+
+</div>
 
 <FindyRef>
 
