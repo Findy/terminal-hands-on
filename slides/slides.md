@@ -61,6 +61,11 @@ role: Findy Inc. / SRE
   <FindyBadge variant="soft">GitHub: mozumasu</FindyBadge>
 </div>
 
+<div class="absolute top-10 right-14 flex flex-col items-center gap-1">
+  <img src="/slides-qr.svg" alt="このスライドのQRコード" class="w-28 rounded-md bg-white p-1.5 shadow" />
+  <span class="text-xs op-60">このスライド</span>
+</div>
+
 ---
 layout: toc
 columns: 1
